@@ -1,0 +1,3633 @@
+[
+    {
+        "id": "7a010fde9cc08f8c",
+        "type": "tab",
+        "label": "Coiling",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ea5ea545545d49fc",
+        "type": "s7 in",
+        "z": "7a010fde9cc08f8c",
+        "endpoint": "4586ad2c.53c174",
+        "mode": "all",
+        "variable": "",
+        "diff": false,
+        "name": "Coiling 13-14-15-16",
+        "x": 130,
+        "y": 220,
+        "wires": [
+            [
+                "73c8abe41264439f",
+                "f07d41c4f5b1aa42",
+                "e9d19a0fe47e87ef",
+                "45c052fba27d1ef1",
+                "bec65571afaeacdd",
+                "3b218e45340fa416",
+                "c7c74d9563b3b02e",
+                "e95210d4bfb7481a"
+            ]
+        ]
+    },
+    {
+        "id": "73c8abe41264439f",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change1\"]",
+        "topi": "topic",
+        "x": 370,
+        "y": 80,
+        "wires": [
+            [
+                "6ff80b33d19d93e5",
+                "d3051897edda9121"
+            ]
+        ]
+    },
+    {
+        "id": "f07d41c4f5b1aa42",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change2\"]",
+        "x": 370,
+        "y": 160,
+        "wires": [
+            [
+                "b9a4f0a541eb623b",
+                "5554e56903295b9e"
+            ]
+        ]
+    },
+    {
+        "id": "e9d19a0fe47e87ef",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change3\"]",
+        "x": 370,
+        "y": 240,
+        "wires": [
+            [
+                "0cad49f8aa3cfbf3",
+                "956d99c258e9fb8a"
+            ]
+        ]
+    },
+    {
+        "id": "45c052fba27d1ef1",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change4\"]",
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "be989080e42c8376",
+                "36af0159cb38c634"
+            ]
+        ]
+    },
+    {
+        "id": "6ff80b33d19d93e5",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-13",
+        "func": "var status;\nif(msg.payload[\"Production_Change1\"] == true){\n    if(msg.payload[\"Machine_Status1\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628141422591\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628141428816\", qualityCode: \"1\", value: msg.payload[\"Wire_Size1\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628141433870\", qualityCode: \"1\", value: msg.payload[\"Final_Length1\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628141439062\", qualityCode: \"1\", value: msg.payload[\"Total_Length1\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628141443743\", qualityCode: \"1\", value: msg.payload[\"Production_Count1\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628141449438\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop1\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 24;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length1\"]}, ${true}, ${msg.payload[\"Production_Count1\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop1\"]},${msg.payload[\"Total_Length1\"]}, ${msg.payload[\"Wire_Size1\"]});`;\n\n        msg.query = query;\n        \n        return msg;\n    }\n   \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 80,
+        "wires": [
+            [
+                "5f65e0fecd638ffb"
+            ]
+        ]
+    },
+    {
+        "id": "b9a4f0a541eb623b",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-14",
+        "func": "var status;\nif(msg.payload[\"Production_Change2\"] == true){\n    if(msg.payload[\"Machine_Status2\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628141315441\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628141321201\", qualityCode: \"1\", value: msg.payload[\"Wire_Size2\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628141327663\", qualityCode: \"1\", value: msg.payload[\"Final_Length2\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628141334919\", qualityCode: \"1\", value: msg.payload[\"Total_Length2\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628141339887\", qualityCode: \"1\", value: msg.payload[\"Production_Count2\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628141345375\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop2\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 25;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length2\"]}, ${true}, ${msg.payload[\"Production_Count2\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop2\"]},${msg.payload[\"Total_Length2\"]}, ${msg.payload[\"Wire_Size2\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 160,
+        "wires": [
+            [
+                "f1a299139f3f4f2e"
+            ]
+        ]
+    },
+    {
+        "id": "0cad49f8aa3cfbf3",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-15",
+        "func": "var status;\nif(msg.payload[\"Production_Change3\"] == true){\n    if(msg.payload[\"Machine_Status3\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628141351631\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628141356488\", qualityCode: \"1\", value: msg.payload[\"Wire_Size3\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628141362279\", qualityCode: \"1\", value: msg.payload[\"Final_Length3\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628141367616\", qualityCode: \"1\", value: msg.payload[\"Total_Length3\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628141372495\", qualityCode: \"1\", value: msg.payload[\"Production_Count3\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628141382807\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop3\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 26;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length3\"]}, ${true}, ${msg.payload[\"Production_Count3\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop3\"]},${msg.payload[\"Total_Length3\"]}, ${msg.payload[\"Wire_Size3\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 240,
+        "wires": [
+            [
+                "79625b8b5c4599fc"
+            ]
+        ]
+    },
+    {
+        "id": "be989080e42c8376",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-16",
+        "func": "var status;\nif(msg.payload[\"Production_Change4\"] == true){\n    if(msg.payload[\"Machine_Status4\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628141392215\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628141397606\", qualityCode: \"1\", value: msg.payload[\"Wire_Size4\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628141403110\", qualityCode: \"1\", value: msg.payload[\"Final_Length4\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628141408055\", qualityCode: \"1\", value: msg.payload[\"Total_Length4\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628141412303\", qualityCode: \"1\", value: msg.payload[\"Production_Count4\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628141416983\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop4\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n        \n        const tableno = 27;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length4\"]}, ${true}, ${msg.payload[\"Production_Count4\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop4\"]},${msg.payload[\"Total_Length4\"]}, ${msg.payload[\"Wire_Size4\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 320,
+        "wires": [
+            [
+                "cde764805425f220"
+            ]
+        ]
+    },
+    {
+        "id": "3b252a83a3e09b39",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-2",
+        "func": "var status;\nif(msg.payload[\"Production_Change2\"] == true){\n    if(msg.payload[\"Machine_Status2\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628140072451\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140088230\", qualityCode: \"1\", value: msg.payload[\"Wire_Size2\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140296898\", qualityCode: \"1\", value: msg.payload[\"Final_Length2\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140308601\", qualityCode: \"1\", value: msg.payload[\"Total_Length2\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140322122\", qualityCode: \"1\", value: msg.payload[\"Production_Count2\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140333010\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop2\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 13;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length2\"]}, ${true}, ${msg.payload[\"Production_Count2\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop2\"]},${msg.payload[\"Total_Length2\"]}, ${msg.payload[\"Wire_Size2\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 500,
+        "wires": [
+            [
+                "95f3b169153887ea"
+            ]
+        ]
+    },
+    {
+        "id": "7f53388b4a0e0fe8",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-3",
+        "func": "var status;\nif(msg.payload[\"Production_Change3\"] == true){\n    if(msg.payload[\"Machine_Status3\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628140350980\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140361602\", qualityCode: \"1\", value: msg.payload[\"Wire_Size3\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140373938\", qualityCode: \"1\", value: msg.payload[\"Final_Length3\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140384178\", qualityCode: \"1\", value: msg.payload[\"Total_Length3\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140391458\", qualityCode: \"1\", value: msg.payload[\"Production_Count3\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140399499\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop3\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        \n        const tableno = 14;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length3\"]}, ${true}, ${msg.payload[\"Production_Count3\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop3\"]},${msg.payload[\"Total_Length3\"]}, ${msg.payload[\"Wire_Size3\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 580,
+        "wires": [
+            [
+                "2119c3779bac1a8a"
+            ]
+        ]
+    },
+    {
+        "id": "81e19b29f7101ac7",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-1",
+        "func": "var status;\nif(msg.payload[\"Production_Change1\"] == true){\n    if(msg.payload[\"Machine_Status1\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628139929731\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628139959102\", qualityCode: \"1\", value: msg.payload[\"Wire_Size1\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628139981499\", qualityCode: \"1\", value: msg.payload[\"Final_Length1\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628139998866\", qualityCode: \"1\", value: msg.payload[\"Total_Length1\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140012571\", qualityCode: \"1\", value: msg.payload[\"Production_Count1\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140031522\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop1\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 12;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length1\"]}, ${true}, ${msg.payload[\"Production_Count1\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop1\"]},${msg.payload[\"Total_Length1\"]}, ${msg.payload[\"Wire_Size1\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 420,
+        "wires": [
+            [
+                "4cff22a6b6d65d14"
+            ]
+        ]
+    },
+    {
+        "id": "01335ac008db49bf",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-4",
+        "func": "var status;\nif(msg.payload[\"Production_Change4\"] == true){\n    if(msg.payload[\"Machine_Status4\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628140426209\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140435116\", qualityCode: \"1\", value: msg.payload[\"Wire_Size4\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140445906\", qualityCode: \"1\", value: msg.payload[\"Final_Length4\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140452897\", qualityCode: \"1\", value: msg.payload[\"Total_Length4\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140459017\", qualityCode: \"1\", value: msg.payload[\"Production_Count4\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140466081\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop4\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 15;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length4\"]}, ${true}, ${msg.payload[\"Production_Count4\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop4\"]},${msg.payload[\"Total_Length4\"]}, ${msg.payload[\"Wire_Size4\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 660,
+        "wires": [
+            [
+                "bba29722c4e5c9f6"
+            ]
+        ]
+    },
+    {
+        "id": "8fb3386b6ac85363",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change1\"]",
+        "topi": "topic",
+        "x": 370,
+        "y": 420,
+        "wires": [
+            [
+                "81e19b29f7101ac7",
+                "9a9914b952b94893"
+            ]
+        ]
+    },
+    {
+        "id": "2e0199ec8768bc02",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change2\"]",
+        "x": 370,
+        "y": 500,
+        "wires": [
+            [
+                "3b252a83a3e09b39",
+                "c540db7a1afc5c7f"
+            ]
+        ]
+    },
+    {
+        "id": "0396565db2d730db",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change3\"]",
+        "x": 370,
+        "y": 580,
+        "wires": [
+            [
+                "7f53388b4a0e0fe8",
+                "fa78a833b2593f0c"
+            ]
+        ]
+    },
+    {
+        "id": "24e3ed7666010db6",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change4\"]",
+        "x": 370,
+        "y": 660,
+        "wires": [
+            [
+                "01335ac008db49bf",
+                "4746445ed1177aaa"
+            ]
+        ]
+    },
+    {
+        "id": "832ee01ddf565526",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-6",
+        "func": "var status;\nif(msg.payload[\"Production_Change2\"] == true){\n    if(msg.payload[\"Machine_Status2\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628140542505\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140552529\", qualityCode: \"1\", value: msg.payload[\"Wire_Size2\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140561561\", qualityCode: \"1\", value: msg.payload[\"Final_Length2\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140569160\", qualityCode: \"1\", value: msg.payload[\"Total_Length2\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140575521\", qualityCode: \"1\", value: msg.payload[\"Production_Count2\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140584281\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop2\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 17;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length2\"]}, ${true}, ${msg.payload[\"Production_Count2\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop2\"]},${msg.payload[\"Total_Length2\"]}, ${msg.payload[\"Wire_Size2\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 840,
+        "wires": [
+            [
+                "4364d26898f8da40"
+            ]
+        ]
+    },
+    {
+        "id": "fc4189efb784c190",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-7",
+        "func": "var status;\nif(msg.payload[\"Production_Change3\"] == true){\n    if(msg.payload[\"Machine_Status3\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628140592040\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140601803\", qualityCode: \"1\", value: msg.payload[\"Wire_Size3\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140612257\", qualityCode: \"1\", value: msg.payload[\"Final_Length3\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140619624\", qualityCode: \"1\", value: msg.payload[\"Total_Length3\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140628273\", qualityCode: \"1\", value: msg.payload[\"Production_Count3\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140673509\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop3\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 18;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length3\"]}, ${true}, ${msg.payload[\"Production_Count3\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop3\"]},${msg.payload[\"Total_Length3\"]}, ${msg.payload[\"Wire_Size3\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 920,
+        "wires": [
+            [
+                "34d7fd4c4d2b3e9d"
+            ]
+        ]
+    },
+    {
+        "id": "1a05245990767da2",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling -5",
+        "func": "var status;\nif(msg.payload[\"Production_Change1\"] == true){\n    if(msg.payload[\"Machine_Status1\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628140477522\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140485848\", qualityCode: \"1\", value: msg.payload[\"Wire_Size1\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140495841\", qualityCode: \"1\", value: msg.payload[\"Final_Length1\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140503001\", qualityCode: \"1\", value: msg.payload[\"Total_Length1\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140509553\", qualityCode: \"1\", value: msg.payload[\"Production_Count1\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140517249\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop1\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 16;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length1\"]}, ${true}, ${msg.payload[\"Production_Count1\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop1\"]},${msg.payload[\"Total_Length1\"]}, ${msg.payload[\"Wire_Size1\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 760,
+        "wires": [
+            [
+                "9c4643d714678988"
+            ]
+        ]
+    },
+    {
+        "id": "4c635ad3fbf24894",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-8",
+        "func": "var status;\nif(msg.payload[\"Production_Change4\"] == true){\n    if(msg.payload[\"Machine_Status4\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628140709010\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140719411\", qualityCode: \"1\", value: msg.payload[\"Wire_Size4\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140731090\", qualityCode: \"1\", value: msg.payload[\"Final_Length4\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140740137\", qualityCode: \"1\", value: msg.payload[\"Total_Length4\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140749713\", qualityCode: \"1\", value: msg.payload[\"Production_Count4\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140755768\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop4\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 19;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length4\"]}, ${true}, ${msg.payload[\"Production_Count4\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop4\"]},${msg.payload[\"Total_Length4\"]}, ${msg.payload[\"Wire_Size4\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 1000,
+        "wires": [
+            [
+                "48ac06239ca5bc74"
+            ]
+        ]
+    },
+    {
+        "id": "190b3f0eab9fc1f1",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change1\"]",
+        "x": 370,
+        "y": 760,
+        "wires": [
+            [
+                "1a05245990767da2",
+                "a9a6832545be4808"
+            ]
+        ]
+    },
+    {
+        "id": "0a63e712c6337be7",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change2\"]",
+        "x": 370,
+        "y": 840,
+        "wires": [
+            [
+                "832ee01ddf565526",
+                "5fe944183f903f0f"
+            ]
+        ]
+    },
+    {
+        "id": "1cfee5820ab25b3b",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change3\"]",
+        "x": 370,
+        "y": 920,
+        "wires": [
+            [
+                "fc4189efb784c190",
+                "4948c95c6c260721"
+            ]
+        ]
+    },
+    {
+        "id": "a68660062e870c29",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change4\"]",
+        "x": 370,
+        "y": 1000,
+        "wires": [
+            [
+                "4c635ad3fbf24894",
+                "5aaf32ba3502859a"
+            ]
+        ]
+    },
+    {
+        "id": "ead125d6c289241a",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change1\"]",
+        "x": 370,
+        "y": 1100,
+        "wires": [
+            [
+                "befa6f3f89fc880d",
+                "c7e8704d42498632"
+            ]
+        ]
+    },
+    {
+        "id": "6ea6a149f9262f31",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change2\"]",
+        "x": 370,
+        "y": 1180,
+        "wires": [
+            [
+                "17320ec04abdfef1",
+                "6d233ecf1d664b54"
+            ]
+        ]
+    },
+    {
+        "id": "44053c594502891d",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change3\"]",
+        "x": 370,
+        "y": 1260,
+        "wires": [
+            [
+                "ca5f7eee6bf6dec5",
+                "8fa1cba8eb564802"
+            ]
+        ]
+    },
+    {
+        "id": "95203ab92bd6570c",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Production_Change4\"]",
+        "x": 370,
+        "y": 1340,
+        "wires": [
+            [
+                "ae9ed3b5df8320ea",
+                "1ac8b8971ebd12e5"
+            ]
+        ]
+    },
+    {
+        "id": "17320ec04abdfef1",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-10",
+        "func": "var status;\nif(msg.payload[\"Production_Change2\"] == true){\n    if(msg.payload[\"Machine_Status2\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628140825363\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140836139\", qualityCode: \"1\", value: msg.payload[\"Wire_Size2\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140849240\", qualityCode: \"1\", value: msg.payload[\"Final_Length2\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140857313\", qualityCode: \"1\", value: msg.payload[\"Total_Length2\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140863824\", qualityCode: \"1\", value: msg.payload[\"Production_Count2\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140872280\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop2\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 21;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length2\"]}, ${true}, ${msg.payload[\"Production_Count2\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop2\"]},${msg.payload[\"Total_Length2\"]}, ${msg.payload[\"Wire_Size2\"]});`;\n\n        msg.query = query;\n\n        return msg;\n   }\n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1180,
+        "wires": [
+            [
+                "b8ee15c01cad9148"
+            ]
+        ]
+    },
+    {
+        "id": "ca5f7eee6bf6dec5",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-11",
+        "func": "var status;\nif(msg.payload[\"Production_Change3\"] == true){\n    if(msg.payload[\"Machine_Status3\"] == true){\n       /* status = \"true\";\n        const values = [\n                { dataPointId: \"1628140904384\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140915018\", qualityCode: \"1\", value: msg.payload[\"Wire_Size3\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628141101832\", qualityCode: \"1\", value: msg.payload[\"Final_Length3\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628141108632\", qualityCode: \"1\", value: msg.payload[\"Total_Length3\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628141142307\", qualityCode: \"1\", value: msg.payload[\"Production_Count3\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628141149431\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop3\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 22;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length3\"]}, ${true}, ${msg.payload[\"Production_Count3\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop3\"]},${msg.payload[\"Total_Length3\"]}, ${msg.payload[\"Wire_Size3\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1260,
+        "wires": [
+            [
+                "1fc93ec6064158f5"
+            ]
+        ]
+    },
+    {
+        "id": "befa6f3f89fc880d",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-09",
+        "func": "var status;\nif(msg.payload[\"Production_Change1\"] == true){\n    if(msg.payload[\"Machine_Status1\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628140766497\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140776099\", qualityCode: \"1\", value: msg.payload[\"Wire_Size1\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140784194\", qualityCode: \"1\", value: msg.payload[\"Final_Length1\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140795395\", qualityCode: \"1\", value: msg.payload[\"Total_Length1\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140805032\", qualityCode: \"1\", value: msg.payload[\"Production_Count1\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140814672\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop1\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 20;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length1\"]}, ${true}, ${msg.payload[\"Production_Count1\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop1\"]},${msg.payload[\"Total_Length1\"]}, ${msg.payload[\"Wire_Size1\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n\n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1100,
+        "wires": [
+            [
+                "d58168b9c5867c41"
+            ]
+        ]
+    },
+    {
+        "id": "ae9ed3b5df8320ea",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-12",
+        "func": "var status;\nif(msg.payload[\"Production_Change4\"] == true){\n    if(msg.payload[\"Machine_Status4\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1628141220031\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628141227008\", qualityCode: \"1\", value: msg.payload[\"Wire_Size4\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628141236318\", qualityCode: \"1\", value: msg.payload[\"Final_Length4\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628141244607\", qualityCode: \"1\", value: msg.payload[\"Total_Length4\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628141251359\", qualityCode: \"1\", value: msg.payload[\"Production_Count4\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628141257294\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop4\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n\n        const tableno = 23;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length4\"]}, ${true}, ${msg.payload[\"Production_Count4\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop4\"]},${msg.payload[\"Total_Length4\"]}, ${msg.payload[\"Wire_Size4\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n\n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1340,
+        "wires": [
+            [
+                "6fb1e63ea4814683"
+            ]
+        ]
+    },
+    {
+        "id": "0a5d2658a9aca67d",
+        "type": "s7 in",
+        "z": "7a010fde9cc08f8c",
+        "endpoint": "93c3fe7a.57b17",
+        "mode": "all",
+        "variable": "",
+        "diff": false,
+        "name": "Coiling 1-2-3-4",
+        "x": 120,
+        "y": 560,
+        "wires": [
+            [
+                "8fb3386b6ac85363",
+                "2e0199ec8768bc02",
+                "0396565db2d730db",
+                "24e3ed7666010db6",
+                "6533a6c4337b4787",
+                "cf99b64db1495065",
+                "27e514dc94629994",
+                "094690025ed88233"
+            ]
+        ]
+    },
+    {
+        "id": "687b0d668de5cd21",
+        "type": "s7 in",
+        "z": "7a010fde9cc08f8c",
+        "endpoint": "a9a7d818.c90068",
+        "mode": "all",
+        "variable": "",
+        "diff": false,
+        "name": "Coiling 5-6-7-8",
+        "x": 120,
+        "y": 900,
+        "wires": [
+            [
+                "190b3f0eab9fc1f1",
+                "0a63e712c6337be7",
+                "1cfee5820ab25b3b",
+                "a68660062e870c29",
+                "524fd2f70486091d",
+                "fe9c199707a95e01",
+                "cde9e715852ddd6e",
+                "030b704b4de35d8a"
+            ]
+        ]
+    },
+    {
+        "id": "943655d083e88dc5",
+        "type": "s7 in",
+        "z": "7a010fde9cc08f8c",
+        "endpoint": "ec53c49d.a911b8",
+        "mode": "all",
+        "variable": "",
+        "diff": false,
+        "name": "Coiling 9-10-11-12",
+        "x": 130,
+        "y": 1240,
+        "wires": [
+            [
+                "95203ab92bd6570c",
+                "44053c594502891d",
+                "6ea6a149f9262f31",
+                "ead125d6c289241a",
+                "0d37a946791e8db8",
+                "c1a1731dc8cc0bdb",
+                "55a46a6d5fee6c74",
+                "589393d9c41e837b"
+            ]
+        ]
+    },
+    {
+        "id": "5f65e0fecd638ffb",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "f1a299139f3f4f2e",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "79625b8b5c4599fc",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "cde764805425f220",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "4cff22a6b6d65d14",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "95f3b169153887ea",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "2119c3779bac1a8a",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "bba29722c4e5c9f6",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "9c4643d714678988",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "4364d26898f8da40",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "34d7fd4c4d2b3e9d",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "48ac06239ca5bc74",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "d58168b9c5867c41",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "b8ee15c01cad9148",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "1fc93ec6064158f5",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "6fb1e63ea4814683",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "bec65571afaeacdd",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status1\"]",
+        "x": 370,
+        "y": 120,
+        "wires": [
+            [
+                "70a90e62da266e48"
+            ]
+        ]
+    },
+    {
+        "id": "70a90e62da266e48",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-13",
+        "func": "var status;\n\n    if(msg.payload[\"Machine_Status1\"] == false){\n        /*status = \"false\";\n        const values = [\n                { dataPointId: \"1628141422591\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628141428816\", qualityCode: \"1\", value: msg.payload[\"Wire_Size1\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628141433870\", qualityCode: \"1\", value: msg.payload[\"Final_Length1\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628141439062\", qualityCode: \"1\", value: msg.payload[\"Total_Length1\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628141443743\", qualityCode: \"1\", value: msg.payload[\"Production_Count1\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628141449438\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop1\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 24;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length1\"]}, ${false}, ${msg.payload[\"Production_Count1\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop1\"]},${msg.payload[\"Total_Length1\"]}, ${msg.payload[\"Wire_Size1\"]});`;\n\n        msg.query = query;\n            return msg;\n    }\n    \n\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 120,
+        "wires": [
+            [
+                "04ca838030852c1d"
+            ]
+        ]
+    },
+    {
+        "id": "04ca838030852c1d",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "3b218e45340fa416",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status2\"]",
+        "x": 370,
+        "y": 200,
+        "wires": [
+            [
+                "581bc87f56b91cdc"
+            ]
+        ]
+    },
+    {
+        "id": "581bc87f56b91cdc",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-14",
+        "func": "var status;\n    if(msg.payload[\"Machine_Status2\"] == false){\n       /* status = \"false\";\n        const values = [\n                { dataPointId: \"1628141315441\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628141321201\", qualityCode: \"1\", value: msg.payload[\"Wire_Size2\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628141327663\", qualityCode: \"1\", value: msg.payload[\"Final_Length2\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628141334919\", qualityCode: \"1\", value: msg.payload[\"Total_Length2\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628141339887\", qualityCode: \"1\", value: msg.payload[\"Production_Count2\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628141345375\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop2\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 25;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length2\"]}, ${false}, ${msg.payload[\"Production_Count2\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop2\"]},${msg.payload[\"Total_Length2\"]}, ${msg.payload[\"Wire_Size2\"]});`;\n\n        msg.query = query;\n        return msg;\n    }\n    //\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 200,
+        "wires": [
+            [
+                "52a67c10d26b4af2"
+            ]
+        ]
+    },
+    {
+        "id": "52a67c10d26b4af2",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e95210d4bfb7481a",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status3\"]",
+        "x": 370,
+        "y": 280,
+        "wires": [
+            [
+                "dd8496e1147c6231"
+            ]
+        ]
+    },
+    {
+        "id": "dd8496e1147c6231",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-15",
+        "func": "var status;\n    if(msg.payload[\"Machine_Status3\"] == false){\n        /*status = \"false\";\n        const values = [\n                { dataPointId: \"1628141351631\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628141356488\", qualityCode: \"1\", value: msg.payload[\"Wire_Size3\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628141362279\", qualityCode: \"1\", value: msg.payload[\"Final_Length3\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628141367616\", qualityCode: \"1\", value: msg.payload[\"Total_Length3\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628141372495\", qualityCode: \"1\", value: msg.payload[\"Production_Count3\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628141382807\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop3\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 26;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length3\"]}, ${false}, ${msg.payload[\"Production_Count3\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop3\"]},${msg.payload[\"Total_Length3\"]}, ${msg.payload[\"Wire_Size3\"]});`;\n\n        msg.query = query;\n        return msg;\n    }",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 280,
+        "wires": [
+            [
+                "a3efeea30c58d43c"
+            ]
+        ]
+    },
+    {
+        "id": "a3efeea30c58d43c",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "c7c74d9563b3b02e",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status4\"]",
+        "x": 370,
+        "y": 360,
+        "wires": [
+            [
+                "fa2c49830012a308"
+            ]
+        ]
+    },
+    {
+        "id": "fa2c49830012a308",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-16",
+        "func": "var status;\n    if(msg.payload[\"Machine_Status4\"] == false){\n        /*status = \"false\";\n        const values = [\n                { dataPointId: \"1628141392215\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628141397606\", qualityCode: \"1\", value: msg.payload[\"Wire_Size4\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628141403110\", qualityCode: \"1\", value: msg.payload[\"Final_Length4\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628141408055\", qualityCode: \"1\", value: msg.payload[\"Total_Length4\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628141412303\", qualityCode: \"1\", value: msg.payload[\"Production_Count4\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628141416983\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop4\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 27;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length4\"]}, ${false}, ${msg.payload[\"Production_Count4\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop4\"]},${msg.payload[\"Total_Length4\"]}, ${msg.payload[\"Wire_Size4\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 360,
+        "wires": [
+            [
+                "a75d0d87080b19f3"
+            ]
+        ]
+    },
+    {
+        "id": "a75d0d87080b19f3",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "424ef213f890441d",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling -5",
+        "func": "var status;\n    if(msg.payload[\"Machine_Status1\"] == false){\n        /*status = \"false\";\n        const values = [\n                { dataPointId: \"1628140477522\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140485848\", qualityCode: \"1\", value: msg.payload[\"Wire_Size1\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140495841\", qualityCode: \"1\", value: msg.payload[\"Final_Length1\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140503001\", qualityCode: \"1\", value: msg.payload[\"Total_Length1\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140509553\", qualityCode: \"1\", value: msg.payload[\"Production_Count1\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140517249\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop1\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 16;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length1\"]}, ${false}, ${msg.payload[\"Production_Count1\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop1\"]},${msg.payload[\"Total_Length1\"]}, ${msg.payload[\"Wire_Size1\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 800,
+        "wires": [
+            [
+                "87285b51a54254cc"
+            ]
+        ]
+    },
+    {
+        "id": "524fd2f70486091d",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status1\"]",
+        "x": 370,
+        "y": 800,
+        "wires": [
+            [
+                "424ef213f890441d"
+            ]
+        ]
+    },
+    {
+        "id": "87285b51a54254cc",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "fc5eca6222e78021",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-6",
+        "func": "var status;\n    if(msg.payload[\"Machine_Status2\"] == false){\n        /*status = \"false\";\n        const values = [\n                { dataPointId: \"1628140542505\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140552529\", qualityCode: \"1\", value: msg.payload[\"Wire_Size2\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140561561\", qualityCode: \"1\", value: msg.payload[\"Final_Length2\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140569160\", qualityCode: \"1\", value: msg.payload[\"Total_Length2\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140575521\", qualityCode: \"1\", value: msg.payload[\"Production_Count2\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140584281\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop2\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n\n        const tableno = 17;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length2\"]}, ${false}, ${msg.payload[\"Production_Count2\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop2\"]},${msg.payload[\"Total_Length2\"]}, ${msg.payload[\"Wire_Size2\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 880,
+        "wires": [
+            [
+                "8e8a5d9d28da0992"
+            ]
+        ]
+    },
+    {
+        "id": "fe9c199707a95e01",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status2\"]",
+        "x": 370,
+        "y": 880,
+        "wires": [
+            [
+                "fc5eca6222e78021"
+            ]
+        ]
+    },
+    {
+        "id": "8e8a5d9d28da0992",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "b56ab5f5fd2cae25",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-7",
+        "func": "var status;\n    if(msg.payload[\"Machine_Status3\"] == false){\n        /*status = \"false\";\n        const values = [\n                { dataPointId: \"1628140592040\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140601803\", qualityCode: \"1\", value: msg.payload[\"Wire_Size3\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140612257\", qualityCode: \"1\", value: msg.payload[\"Final_Length3\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140619624\", qualityCode: \"1\", value: msg.payload[\"Total_Length3\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140628273\", qualityCode: \"1\", value: msg.payload[\"Production_Count3\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140673509\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop3\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 18;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length3\"]}, ${false}, ${msg.payload[\"Production_Count3\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop3\"]},${msg.payload[\"Total_Length3\"]}, ${msg.payload[\"Wire_Size3\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 960,
+        "wires": [
+            [
+                "6a085cd01caac47e"
+            ]
+        ]
+    },
+    {
+        "id": "cde9e715852ddd6e",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status3\"]",
+        "x": 370,
+        "y": 960,
+        "wires": [
+            [
+                "b56ab5f5fd2cae25"
+            ]
+        ]
+    },
+    {
+        "id": "6a085cd01caac47e",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "030b704b4de35d8a",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status4\"]",
+        "x": 370,
+        "y": 1040,
+        "wires": [
+            [
+                "fb5a710f7e07ef6d"
+            ]
+        ]
+    },
+    {
+        "id": "fb5a710f7e07ef6d",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-8",
+        "func": "var status;\n    if(msg.payload[\"Machine_Status4\"] == false){\n        /*status = \"false\";\n        const values = [\n                { dataPointId: \"1628140709010\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140719411\", qualityCode: \"1\", value: msg.payload[\"Wire_Size4\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140731090\", qualityCode: \"1\", value: msg.payload[\"Final_Length4\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140740137\", qualityCode: \"1\", value: msg.payload[\"Total_Length4\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140749713\", qualityCode: \"1\", value: msg.payload[\"Production_Count4\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140755768\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop4\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 19;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length4\"]}, ${false}, ${msg.payload[\"Production_Count4\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop4\"]},${msg.payload[\"Total_Length4\"]}, ${msg.payload[\"Wire_Size4\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n    \n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 1040,
+        "wires": [
+            [
+                "ecfe089e84bcd9ac"
+            ]
+        ]
+    },
+    {
+        "id": "ecfe089e84bcd9ac",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "0d37a946791e8db8",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status1\"]",
+        "x": 370,
+        "y": 1140,
+        "wires": [
+            [
+                "49b29d0ecb919331"
+            ]
+        ]
+    },
+    {
+        "id": "49b29d0ecb919331",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-09",
+        "func": "var status;\n    if(msg.payload[\"Machine_Status1\"] == false){\n        /*status = \"false\";\n        const values = [\n                { dataPointId: \"1628140766497\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140776099\", qualityCode: \"1\", value: msg.payload[\"Wire_Size1\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140784194\", qualityCode: \"1\", value: msg.payload[\"Final_Length1\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140795395\", qualityCode: \"1\", value: msg.payload[\"Total_Length1\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140805032\", qualityCode: \"1\", value: msg.payload[\"Production_Count1\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140814672\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop1\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 20;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length1\"]}, ${false}, ${msg.payload[\"Production_Count1\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop1\"]},${msg.payload[\"Total_Length1\"]}, ${msg.payload[\"Wire_Size1\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1140,
+        "wires": [
+            [
+                "f33766f58ff29415"
+            ]
+        ]
+    },
+    {
+        "id": "f33766f58ff29415",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "c1a1731dc8cc0bdb",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status2\"]",
+        "x": 370,
+        "y": 1220,
+        "wires": [
+            [
+                "a3349e44710b24e4"
+            ]
+        ]
+    },
+    {
+        "id": "a3349e44710b24e4",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-10",
+        "func": "var status;\n    if(msg.payload[\"Machine_Status2\"] == false){\n        /*status = \"false\";\n        const values = [\n                { dataPointId: \"1628140825363\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140836139\", qualityCode: \"1\", value: msg.payload[\"Wire_Size2\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140849240\", qualityCode: \"1\", value: msg.payload[\"Final_Length2\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140857313\", qualityCode: \"1\", value: msg.payload[\"Total_Length2\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140863824\", qualityCode: \"1\", value: msg.payload[\"Production_Count2\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140872280\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop2\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n\n        const tableno = 21;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length2\"]}, ${false}, ${msg.payload[\"Production_Count2\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop2\"]},${msg.payload[\"Total_Length2\"]}, ${msg.payload[\"Wire_Size2\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1220,
+        "wires": [
+            [
+                "9f17a62cf5a21df9"
+            ]
+        ]
+    },
+    {
+        "id": "9f17a62cf5a21df9",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "55a46a6d5fee6c74",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status3\"]",
+        "x": 370,
+        "y": 1300,
+        "wires": [
+            [
+                "6d0947d904724d15"
+            ]
+        ]
+    },
+    {
+        "id": "6d0947d904724d15",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-11",
+        "func": "var status;\n    if(msg.payload[\"Machine_Status3\"] == false){\n        /*status = \"false\";\n        const values = [\n                { dataPointId: \"1628140904384\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140915018\", qualityCode: \"1\", value: msg.payload[\"Wire_Size3\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628141101832\", qualityCode: \"1\", value: msg.payload[\"Final_Length3\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628141108632\", qualityCode: \"1\", value: msg.payload[\"Total_Length3\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628141142307\", qualityCode: \"1\", value: msg.payload[\"Production_Count3\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628141149431\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop3\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n\n        const tableno = 22;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length3\"]}, ${false}, ${msg.payload[\"Production_Count3\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop3\"]},${msg.payload[\"Total_Length3\"]}, ${msg.payload[\"Wire_Size3\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n    \n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1300,
+        "wires": [
+            [
+                "55f58b6ee7b26b39"
+            ]
+        ]
+    },
+    {
+        "id": "55f58b6ee7b26b39",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "589393d9c41e837b",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status4\"]",
+        "x": 370,
+        "y": 1380,
+        "wires": [
+            [
+                "22e800a6c8f85f68"
+            ]
+        ]
+    },
+    {
+        "id": "22e800a6c8f85f68",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-12",
+        "func": "var status;\n    if(msg.payload[\"Machine_Status4\"] == false){\n       /* status = \"false\";\n        const values = [\n                { dataPointId: \"1628141220031\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628141227008\", qualityCode: \"1\", value: msg.payload[\"Wire_Size4\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628141236318\", qualityCode: \"1\", value: msg.payload[\"Final_Length4\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628141244607\", qualityCode: \"1\", value: msg.payload[\"Total_Length4\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628141251359\", qualityCode: \"1\", value: msg.payload[\"Production_Count4\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628141257294\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop4\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 23;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length4\"]}, ${false}, ${msg.payload[\"Production_Count4\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop4\"]},${msg.payload[\"Total_Length4\"]}, ${msg.payload[\"Wire_Size4\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    }\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1380,
+        "wires": [
+            [
+                "be0c648ecd7a4c2d"
+            ]
+        ]
+    },
+    {
+        "id": "be0c648ecd7a4c2d",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "92ab5d6e3edd7f15",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-1",
+        "func": "var status;\n\n    if(msg.payload[\"Machine_Status1\"] == false){\n        /*status = \"false\";\n        const values = [\n                { dataPointId: \"1628139929731\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628139959102\", qualityCode: \"1\", value: msg.payload[\"Wire_Size1\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628139981499\", qualityCode: \"1\", value: msg.payload[\"Final_Length1\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628139998866\", qualityCode: \"1\", value: msg.payload[\"Total_Length1\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140012571\", qualityCode: \"1\", value: msg.payload[\"Production_Count1\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140031522\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop1\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n    \n    const tableno = 12;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length1\"]}, ${false}, ${msg.payload[\"Production_Count1\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop1\"]},${msg.payload[\"Total_Length1\"]}, ${msg.payload[\"Wire_Size1\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 460,
+        "wires": [
+            [
+                "c28e8756b293fad1"
+            ]
+        ]
+    },
+    {
+        "id": "cf99b64db1495065",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status1\"]",
+        "x": 370,
+        "y": 460,
+        "wires": [
+            [
+                "92ab5d6e3edd7f15"
+            ]
+        ]
+    },
+    {
+        "id": "c28e8756b293fad1",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "8f282c0a8747ca54",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-2",
+        "func": "var status;\n\n    if(msg.payload[\"Machine_Status2\"] == false){\n       /* status = \"false\";\n        const values = [\n                { dataPointId: \"1628140072451\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140088230\", qualityCode: \"1\", value: msg.payload[\"Wire_Size2\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140296898\", qualityCode: \"1\", value: msg.payload[\"Final_Length2\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140308601\", qualityCode: \"1\", value: msg.payload[\"Total_Length2\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140322122\", qualityCode: \"1\", value: msg.payload[\"Production_Count2\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140333010\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop2\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n    \n    const tableno = 13;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length2\"]}, ${false}, ${msg.payload[\"Production_Count2\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop2\"]},${msg.payload[\"Total_Length2\"]}, ${msg.payload[\"Wire_Size2\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 540,
+        "wires": [
+            [
+                "e1806d45d3732e72"
+            ]
+        ]
+    },
+    {
+        "id": "27e514dc94629994",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status2\"]",
+        "x": 370,
+        "y": 540,
+        "wires": [
+            [
+                "8f282c0a8747ca54"
+            ]
+        ]
+    },
+    {
+        "id": "e1806d45d3732e72",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "1b1ac2addcb10a1b",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-3",
+        "func": "var status;\n\n    if(msg.payload[\"Machine_Status3\"] == false){\n        /*status = \"false\";\n        const values = [\n                { dataPointId: \"1628140350980\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140361602\", qualityCode: \"1\", value: msg.payload[\"Wire_Size3\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140373938\", qualityCode: \"1\", value: msg.payload[\"Final_Length3\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140384178\", qualityCode: \"1\", value: msg.payload[\"Total_Length3\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140391458\", qualityCode: \"1\", value: msg.payload[\"Production_Count3\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140399499\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop3\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 14;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length3\"]}, ${false}, ${msg.payload[\"Production_Count3\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop3\"]},${msg.payload[\"Total_Length3\"]}, ${msg.payload[\"Wire_Size3\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 620,
+        "wires": [
+            [
+                "945ef7b2223bb26e"
+            ]
+        ]
+    },
+    {
+        "id": "094690025ed88233",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status3\"]",
+        "x": 370,
+        "y": 620,
+        "wires": [
+            [
+                "1b1ac2addcb10a1b"
+            ]
+        ]
+    },
+    {
+        "id": "945ef7b2223bb26e",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "6c6b53a6ba2c3197",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-4",
+        "func": "var status;\n\n    if(msg.payload[\"Machine_Status4\"] == false){\n        /*status = \"false\";\n        const values = [\n                { dataPointId: \"1628140426209\", qualityCode: \"1\", value: status},//MACHINE_STATUS\n                { dataPointId: \"1628140435116\", qualityCode: \"1\", value: msg.payload[\"Wire_Size4\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1628140445906\", qualityCode: \"1\", value: msg.payload[\"Final_Length4\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1628140452897\", qualityCode: \"1\", value: msg.payload[\"Total_Length4\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1628140459017\", qualityCode: \"1\", value: msg.payload[\"Production_Count4\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1628140466081\", qualityCode: \"1\", value: msg.payload[\"Reason_of_Last_Stop4\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 15;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.tableName(tableno);\n\n        var query = `INSERT INTO ${tablename}(\"Datetime\", \"FINAL_LENGTH_METER\", \"MACHINE_STATUS\", \"PRODUCTION_COUNT\",\n                    \"REASON_OF_STOP\", \"TOTAL_LENGTH_METER\", \"WIRE_SIZE\")\n\t                VALUES ('${datetime}',${msg.payload[\"Final_Length4\"]}, ${false}, ${msg.payload[\"Production_Count4\"]},\n                     ${msg.payload[\"Reason_of_Last_Stop4\"]},${msg.payload[\"Total_Length4\"]}, ${msg.payload[\"Wire_Size4\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    \n    \n    \n}\n\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 700,
+        "wires": [
+            [
+                "bdeca417d66d48a0"
+            ]
+        ]
+    },
+    {
+        "id": "6533a6c4337b4787",
+        "type": "rbe",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload[\"Machine_Status4\"]",
+        "x": 370,
+        "y": 700,
+        "wires": [
+            [
+                "6c6b53a6ba2c3197"
+            ]
+        ]
+    },
+    {
+        "id": "bdeca417d66d48a0",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 695,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "9a9914b952b94893",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-1",
+        "func": "var status;\nif(msg.payload[\"Production_Change1\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653126025299\", qualityCode: \"1\", value: msg.payload[\"Final_Length1\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653126017896\", qualityCode: \"1\", value: msg.payload[\"1_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653126008791\", qualityCode: \"1\", value: msg.payload[\"1_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653126000617\", qualityCode: \"1\", value: msg.payload[\"1_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653125991872\", qualityCode: \"1\", value: msg.payload[\"1_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653125979568\", qualityCode: \"1\", value: msg.payload[\"1_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653125962890\", qualityCode: \"1\", value: msg.payload[\"1_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653125848177\", qualityCode: \"1\", value: msg.payload[\"Machine_Status1\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 7;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length1\"]}, ${msg.payload[\"Machine_Status1\"]}, ${msg.payload[\"1_100\"]},${msg.payload[\"1_150\"]},\n                ${msg.payload[\"1_250\"]}, ${msg.payload[\"1_400\"]}, ${msg.payload[\"1_600\"]}, ${msg.payload[\"1_75\"]});`;\n\n        msg.query = query;\n        return msg;\n    \n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 440,
+        "wires": [
+            [
+                "f147c639049851dc"
+            ]
+        ]
+    },
+    {
+        "id": "c540db7a1afc5c7f",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-2",
+        "func": "var status;\nif(msg.payload[\"Production_Change2\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653126124520\", qualityCode: \"1\", value: msg.payload[\"Final_Length2\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653126115473\", qualityCode: \"1\", value: msg.payload[\"2_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653126107929\", qualityCode: \"1\", value: msg.payload[\"2_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653126101540\", qualityCode: \"1\", value: msg.payload[\"2_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653126084423\", qualityCode: \"1\", value: msg.payload[\"2_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653126074202\", qualityCode: \"1\", value: msg.payload[\"2_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653126068887\", qualityCode: \"1\", value: msg.payload[\"2_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653126062433\", qualityCode: \"1\", value: msg.payload[\"Machine_Status2\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n    \n        const tableno = 8;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length2\"]}, ${msg.payload[\"Machine_Status2\"]}, ${msg.payload[\"2_100\"]},${msg.payload[\"2_150\"]},\n                ${msg.payload[\"2_250\"]}, ${msg.payload[\"2_400\"]}, ${msg.payload[\"2_600\"]}, ${msg.payload[\"2_75\"]});`;\n\n        msg.query = query;\n        return msg;\n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 520,
+        "wires": [
+            [
+                "7d5f5db324548af4"
+            ]
+        ]
+    },
+    {
+        "id": "fa78a833b2593f0c",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-3",
+        "func": "var status;\nif(msg.payload[\"Production_Change3\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653126213249\", qualityCode: \"1\", value: msg.payload[\"Final_Length3\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653126207871\", qualityCode: \"1\", value: msg.payload[\"3_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653126194659\", qualityCode: \"1\", value: msg.payload[\"3_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653126306218\", qualityCode: \"1\", value: msg.payload[\"3_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653126164743\", qualityCode: \"1\", value: msg.payload[\"3_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653126154689\", qualityCode: \"1\", value: msg.payload[\"3_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653126147959\", qualityCode: \"1\", value: msg.payload[\"3_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653126134520\", qualityCode: \"1\", value: msg.payload[\"Machine_Status3\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n    \n        const tableno = 9;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length3\"]}, ${msg.payload[\"Machine_Status3\"]}, ${msg.payload[\"3_100\"]},${msg.payload[\"3_150\"]},\n                ${msg.payload[\"3_250\"]}, ${msg.payload[\"3_400\"]}, ${msg.payload[\"3_600\"]}, ${msg.payload[\"3_75\"]});`;\n\n        msg.query = query;\n        return msg;\n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 600,
+        "wires": [
+            [
+                "240e14a43899c2d2"
+            ]
+        ]
+    },
+    {
+        "id": "4746445ed1177aaa",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-4",
+        "func": "var status;\nif(msg.payload[\"Production_Change4\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653126334608\", qualityCode: \"1\", value: msg.payload[\"Final_Length4\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653126330112\", qualityCode: \"1\", value: msg.payload[\"4_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653126276939\", qualityCode: \"1\", value: msg.payload[\"4_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653126318516\", qualityCode: \"1\", value: msg.payload[\"4_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653126268422\", qualityCode: \"1\", value: msg.payload[\"4_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653126249855\", qualityCode: \"1\", value: msg.payload[\"4_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653126242552\", qualityCode: \"1\", value: msg.payload[\"4_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653126235076\", qualityCode: \"1\", value: msg.payload[\"Machine_Status4\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n    \n        const tableno = 10;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length4\"]}, ${msg.payload[\"Machine_Status4\"]}, ${msg.payload[\"4_100\"]},${msg.payload[\"4_150\"]},\n                ${msg.payload[\"4_250\"]}, ${msg.payload[\"4_400\"]}, ${msg.payload[\"4_600\"]}, ${msg.payload[\"4_75\"]});`;\n\n        msg.query = query;\n        return msg;\n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 680,
+        "wires": [
+            [
+                "0f99bb66c771df20"
+            ]
+        ]
+    },
+    {
+        "id": "a9a6832545be4808",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling -5",
+        "func": "var status;\nif(msg.payload[\"Production_Change1\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653126888441\", qualityCode: \"1\", value: msg.payload[\"Final_Length1\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653126880881\", qualityCode: \"1\", value: msg.payload[\"5_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653126873832\", qualityCode: \"1\", value: msg.payload[\"5_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653126868823\", qualityCode: \"1\", value: msg.payload[\"5_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653126863617\", qualityCode: \"1\", value: msg.payload[\"5_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653126855363\", qualityCode: \"1\", value: msg.payload[\"5_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653126843801\", qualityCode: \"1\", value: msg.payload[\"5_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653126837363\", qualityCode: \"1\", value: msg.payload[\"Machine_Status1\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 11;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length1\"]}, ${msg.payload[\"Machine_Status1\"]}, ${msg.payload[\"5_100\"]},${msg.payload[\"5_150\"]},\n                ${msg.payload[\"5_250\"]}, ${msg.payload[\"5_400\"]}, ${msg.payload[\"5_600\"]}, ${msg.payload[\"5_75\"]});`;\n\n        msg.query = query;\n        return msg;\n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 740,
+        "wires": [
+            [
+                "84668362d32e753a"
+            ]
+        ]
+    },
+    {
+        "id": "5fe944183f903f0f",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-6",
+        "func": "var status;\nif(msg.payload[\"Production_Change2\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653126980457\", qualityCode: \"1\", value: msg.payload[\"Final_Length2\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653126975232\", qualityCode: \"1\", value: msg.payload[\"6_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653126969576\", qualityCode: \"1\", value: msg.payload[\"6_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653126962559\", qualityCode: \"1\", value: msg.payload[\"6_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653126955956\", qualityCode: \"1\", value: msg.payload[\"6_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653126912896\", qualityCode: \"1\", value: msg.payload[\"6_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653126906991\", qualityCode: \"1\", value: msg.payload[\"6_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653126901250\", qualityCode: \"1\", value: msg.payload[\"Machine_Status2\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n    \n        const tableno = 12;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length2\"]}, ${msg.payload[\"Machine_Status2\"]}, ${msg.payload[\"6_100\"]},${msg.payload[\"6_150\"]},\n                ${msg.payload[\"6_250\"]}, ${msg.payload[\"6_400\"]}, ${msg.payload[\"6_600\"]}, ${msg.payload[\"6_75\"]});`;\n\n        msg.query = query;\n        return msg;\n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 820,
+        "wires": [
+            [
+                "c6a09745f26b78b2"
+            ]
+        ]
+    },
+    {
+        "id": "4948c95c6c260721",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-7",
+        "func": "var status;\nif(msg.payload[\"Production_Change3\"] == true){\n       /* status = \"true\";\n        const values = [\n                { dataPointId: \"1653127044689\", qualityCode: \"1\", value: msg.payload[\"Final_Length3\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653127039810\", qualityCode: \"1\", value: msg.payload[\"7_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653127034096\", qualityCode: \"1\", value: msg.payload[\"7_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653127027936\", qualityCode: \"1\", value: msg.payload[\"7_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653127021664\", qualityCode: \"1\", value: msg.payload[\"7_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653127015816\", qualityCode: \"1\", value: msg.payload[\"7_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653127008093\", qualityCode: \"1\", value: msg.payload[\"7_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653126989968\", qualityCode: \"1\", value: msg.payload[\"Machine_Status3\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 13;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length3\"]}, ${msg.payload[\"Machine_Status3\"]}, ${msg.payload[\"7_100\"]},${msg.payload[\"7_150\"]},\n                ${msg.payload[\"7_250\"]}, ${msg.payload[\"7_400\"]}, ${msg.payload[\"7_600\"]}, ${msg.payload[\"7_75\"]});`;\n\n        msg.query = query;\n        return msg;\n    \n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 900,
+        "wires": [
+            [
+                "5be032e2306e7beb"
+            ]
+        ]
+    },
+    {
+        "id": "5aaf32ba3502859a",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-8",
+        "func": "var status;\nif(msg.payload[\"Production_Change4\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653127142281\", qualityCode: \"1\", value: msg.payload[\"Final_Length4\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653127136932\", qualityCode: \"1\", value: msg.payload[\"8_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653127126424\", qualityCode: \"1\", value: msg.payload[\"8_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653127110504\", qualityCode: \"1\", value: msg.payload[\"8_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653127103887\", qualityCode: \"1\", value: msg.payload[\"8_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653127098337\", qualityCode: \"1\", value: msg.payload[\"8_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653127092591\", qualityCode: \"1\", value: msg.payload[\"8_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653127086081\", qualityCode: \"1\", value: msg.payload[\"Machine_Status4\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 14;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length4\"]}, ${msg.payload[\"Machine_Status4\"]}, ${msg.payload[\"8_100\"]},${msg.payload[\"8_150\"]},\n                ${msg.payload[\"8_250\"]}, ${msg.payload[\"8_400\"]}, ${msg.payload[\"8_600\"]}, ${msg.payload[\"8_75\"]});`;\n\n        msg.query = query;\n        return msg;\n    \n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 980,
+        "wires": [
+            [
+                "50af620a260a6838"
+            ]
+        ]
+    },
+    {
+        "id": "c7e8704d42498632",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-09",
+        "func": "var status;\nif(msg.payload[\"Production_Change1\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653127925695\", qualityCode: \"1\", value: msg.payload[\"Final_Length1\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653127920376\", qualityCode: \"1\", value: msg.payload[\"9_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653127899304\", qualityCode: \"1\", value: msg.payload[\"9_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653127891202\", qualityCode: \"1\", value: msg.payload[\"9_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653127854433\", qualityCode: \"1\", value: msg.payload[\"9_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653127843755\", qualityCode: \"1\", value: msg.payload[\"9_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653127833689\", qualityCode: \"1\", value: msg.payload[\"9_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653127825075\", qualityCode: \"1\", value: msg.payload[\"Machine_Status1\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n        \n        const tableno = 15;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length1\"]}, ${msg.payload[\"Machine_Status1\"]}, ${msg.payload[\"9_100\"]},${msg.payload[\"9_150\"]},\n                ${msg.payload[\"9_250\"]}, ${msg.payload[\"9_400\"]}, ${msg.payload[\"9_600\"]}, ${msg.payload[\"9_75\"]});`;\n\n        msg.query = query;\n        return msg;\n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 1120,
+        "wires": [
+            [
+                "1212fc73bbbfd335"
+            ]
+        ]
+    },
+    {
+        "id": "6d233ecf1d664b54",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-10",
+        "func": "var status;\nif(msg.payload[\"Production_Change2\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653127993008\", qualityCode: \"1\", value: msg.payload[\"Final_Length2\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653127985911\", qualityCode: \"1\", value: msg.payload[\"10_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653127980471\", qualityCode: \"1\", value: msg.payload[\"10_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653127975069\", qualityCode: \"1\", value: msg.payload[\"10_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653127966857\", qualityCode: \"1\", value: msg.payload[\"10_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653127959696\", qualityCode: \"1\", value: msg.payload[\"10_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653127954168\", qualityCode: \"1\", value: msg.payload[\"10_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653127946924\", qualityCode: \"1\", value: msg.payload[\"Machine_Status2\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n    \n        const tableno = 16;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length2\"]}, ${msg.payload[\"Machine_Status2\"]}, ${msg.payload[\"10_100\"]},${msg.payload[\"10_150\"]},\n                ${msg.payload[\"10_250\"]}, ${msg.payload[\"10_400\"]}, ${msg.payload[\"10_600\"]}, ${msg.payload[\"10_75\"]});`;\n\n        msg.query = query;\n        return msg;\n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 1200,
+        "wires": [
+            [
+                "ac9f658ee42ac725"
+            ]
+        ]
+    },
+    {
+        "id": "8fa1cba8eb564802",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-11",
+        "func": "var status;\nif(msg.payload[\"Production_Change3\"] == true){\n       /* status = \"true\";\n        const values = [\n                { dataPointId: \"1653128065097\", qualityCode: \"1\", value: msg.payload[\"Final_Length3\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653128058232\", qualityCode: \"1\", value: msg.payload[\"11_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653128051040\", qualityCode: \"1\", value: msg.payload[\"11_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653128045441\", qualityCode: \"1\", value: msg.payload[\"11_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653128039073\", qualityCode: \"1\", value: msg.payload[\"11_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653128031695\", qualityCode: \"1\", value: msg.payload[\"11_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653128019669\", qualityCode: \"1\", value: msg.payload[\"11_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653128005744\", qualityCode: \"1\", value: msg.payload[\"Machine_Status3\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 17;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length3\"]}, ${msg.payload[\"Machine_Status3\"]}, ${msg.payload[\"11_100\"]},${msg.payload[\"11_150\"]},\n                ${msg.payload[\"11_250\"]}, ${msg.payload[\"11_400\"]}, ${msg.payload[\"11_600\"]}, ${msg.payload[\"11_75\"]});`;\n\n        msg.query = query;\n        return msg;    \n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 1280,
+        "wires": [
+            [
+                "691c1a69d3d75b6b"
+            ]
+        ]
+    },
+    {
+        "id": "1ac8b8971ebd12e5",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Coiling-12",
+        "func": "var status;\nif(msg.payload[\"Production_Change4\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653128220289\", qualityCode: \"1\", value: msg.payload[\"Final_Length4\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653128215609\", qualityCode: \"1\", value: msg.payload[\"12_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653128207680\", qualityCode: \"1\", value: msg.payload[\"12_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653128201873\", qualityCode: \"1\", value: msg.payload[\"12_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653128197305\", qualityCode: \"1\", value: msg.payload[\"12_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653128192058\", qualityCode: \"1\", value: msg.payload[\"12_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653128185570\", qualityCode: \"1\", value: msg.payload[\"12_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653128177453\", qualityCode: \"1\", value: msg.payload[\"Machine_Status4\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n    \n        const tableno = 18;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length4\"]}, ${msg.payload[\"Machine_Status4\"]}, ${msg.payload[\"12_100\"]},${msg.payload[\"12_150\"]},\n                ${msg.payload[\"12_250\"]}, ${msg.payload[\"12_400\"]}, ${msg.payload[\"12_600\"]}, ${msg.payload[\"12_75\"]});`;\n\n        msg.query = query;\n        return msg;   \n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 1360,
+        "wires": [
+            [
+                "8d3d543f6ffb22c0"
+            ]
+        ]
+    },
+    {
+        "id": "d3051897edda9121",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-13",
+        "func": "var status;\nif(msg.payload[\"Production_Change1\"] == true){\n\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653128289432\", qualityCode: \"1\", value: msg.payload[\"Final_Length1\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653128284961\", qualityCode: \"1\", value: msg.payload[\"13_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653128279737\", qualityCode: \"1\", value: msg.payload[\"13_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653128273241\", qualityCode: \"1\", value: msg.payload[\"13_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653128257480\", qualityCode: \"1\", value: msg.payload[\"13_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653128252385\", qualityCode: \"1\", value: msg.payload[\"13_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653128246962\", qualityCode: \"1\", value: msg.payload[\"13_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653128236096\", qualityCode: \"1\", value: msg.payload[\"Machine_Status1\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n            \n        const tableno = 19;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length1\"]}, ${msg.payload[\"Machine_Status1\"]}, ${msg.payload[\"13_100\"]},${msg.payload[\"13_150\"]},\n                ${msg.payload[\"13_250\"]}, ${msg.payload[\"13_400\"]}, ${msg.payload[\"13_600\"]}, ${msg.payload[\"13_75\"]});`;\n\n        msg.query = query;\n        return msg;\n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 40,
+        "wires": [
+            [
+                "539ec9828656dc45"
+            ]
+        ]
+    },
+    {
+        "id": "5554e56903295b9e",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-14",
+        "func": "var status;\nif(msg.payload[\"Production_Change2\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653128413385\", qualityCode: \"1\", value: msg.payload[\"Final_Length2\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653128408479\", qualityCode: \"1\", value: msg.payload[\"14_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653128402495\", qualityCode: \"1\", value: msg.payload[\"14_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653128394369\", qualityCode: \"1\", value: msg.payload[\"14_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653128386696\", qualityCode: \"1\", value: msg.payload[\"14_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653128325490\", qualityCode: \"1\", value: msg.payload[\"14_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653128313332\", qualityCode: \"1\", value: msg.payload[\"14_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653128300137\", qualityCode: \"1\", value: msg.payload[\"Machine_Status2\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n\n        const tableno = 20;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length2\"]}, ${msg.payload[\"Machine_Status2\"]}, ${msg.payload[\"14_100\"]},${msg.payload[\"14_150\"]},\n                ${msg.payload[\"14_250\"]}, ${msg.payload[\"14_400\"]}, ${msg.payload[\"14_600\"]}, ${msg.payload[\"14_75\"]});`;\n\n        msg.query = query;\n\n        return msg;\n    \n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 140,
+        "wires": [
+            [
+                "47d604072e9af094"
+            ]
+        ]
+    },
+    {
+        "id": "956d99c258e9fb8a",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-15",
+        "func": "var status;\nif(msg.payload[\"Production_Change3\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653128513944\", qualityCode: \"1\", value: msg.payload[\"Final_Length3\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653128502954\", qualityCode: \"1\", value: msg.payload[\"15_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653128489280\", qualityCode: \"1\", value: msg.payload[\"15_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653128476369\", qualityCode: \"1\", value: msg.payload[\"15_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653128463729\", qualityCode: \"1\", value: msg.payload[\"15_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653128453464\", qualityCode: \"1\", value: msg.payload[\"15_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653128443738\", qualityCode: \"1\", value: msg.payload[\"15_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653128429944\", qualityCode: \"1\", value: msg.payload[\"Machine_Status3\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n        \n        const tableno = 21;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length3\"]}, ${msg.payload[\"Machine_Status3\"]}, ${msg.payload[\"15_100\"]},${msg.payload[\"15_150\"]},\n                ${msg.payload[\"15_250\"]}, ${msg.payload[\"15_400\"]}, ${msg.payload[\"15_600\"]}, ${msg.payload[\"15_75\"]});`;\n\n        msg.query = query;\n        return msg;\n    \n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 220,
+        "wires": [
+            [
+                "6fab1886e03f5188"
+            ]
+        ]
+    },
+    {
+        "id": "36af0159cb38c634",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "coiling-16",
+        "func": "var status;\nif(msg.payload[\"Production_Change4\"] == true){\n        /*status = \"true\";\n        const values = [\n                { dataPointId: \"1653128556770\", qualityCode: \"1\", value: msg.payload[\"Final_Length4\"].toString()},//MACHINE_STATUS\n                { dataPointId: \"1653128551476\", qualityCode: \"1\", value: msg.payload[\"16_600\"].toString()},//WIRE_SIZE\n                { dataPointId: \"1653128497312\", qualityCode: \"1\", value: msg.payload[\"16_400\"].toString()},//FINAL_LENGTH_METER\n                { dataPointId: \"1653128481792\", qualityCode: \"1\", value: msg.payload[\"16_250\"].toString()},//TOTAL_LENGTH_METER\n                { dataPointId: \"1653128469264\", qualityCode: \"1\", value: msg.payload[\"16_150\"].toString()},//PRODUCTION_COUNT\n                { dataPointId: \"1653128457521\", qualityCode: \"1\", value: msg.payload[\"16_100\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653128448761\", qualityCode: \"1\", value: msg.payload[\"16_75\"].toString()},//REASON_OF_STOP\n                { dataPointId: \"1653128438073\", qualityCode: \"1\", value: msg.payload[\"Machine_Status4\"].toString()}//REASON_OF_STOP\n               ];\n            msg._time = new Date();\n            msg.payload = values;\n            return msg;*/\n\n        const tableno = 22;\n        const fun = global.get(\"PolycabGlobalFuncation\");\n        const datetime = fun.globalDate();\n        const tablename = fun.sdTableName(tableno);\n\n        var query = `INSERT INTO ${tablename} (\"Datetime\", \"Final_Length_Mtr\", \"Machine_Status\", \"Sqmm_100\", \"Sqmm_150\",\n                 \"Sqmm_250\", \"Sqmm_400\", \"Sqmm_600\", \"Sqmm_75\")\n\t        VALUES ('${datetime}', ${msg.payload[\"Final_Length4\"]}, ${msg.payload[\"Machine_Status4\"]}, ${msg.payload[\"16_100\"]},${msg.payload[\"16_150\"]},\n                ${msg.payload[\"16_250\"]}, ${msg.payload[\"16_400\"]}, ${msg.payload[\"16_600\"]}, ${msg.payload[\"16_75\"]});`;\n\n        msg.query = query;\n        return msg;\n    \n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 300,
+        "wires": [
+            [
+                "3e829141bdf6ea2d"
+            ]
+        ]
+    },
+    {
+        "id": "539ec9828656dc45",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "47d604072e9af094",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "6fab1886e03f5188",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "3e829141bdf6ea2d",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "f147c639049851dc",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "7d5f5db324548af4",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 955,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "240e14a43899c2d2",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "0f99bb66c771df20",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "84668362d32e753a",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "c6a09745f26b78b2",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "5be032e2306e7beb",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "50af620a260a6838",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "1212fc73bbbfd335",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "ac9f658ee42ac725",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 945,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "691c1a69d3d75b6b",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "8d3d543f6ffb22c0",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "MWD24",
+        "links": [
+            "9e4324344cd9da23"
+        ],
+        "x": 935,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "62b09906a6aa5621",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "Unit-7 Global Funcation",
+        "func": "var fun = global.get(\"PolycabGlobalFuncation\");\nif (fun == undefined) {\n    var setFuncations = {\n        \"globalDate\": function () {\n            var date = new Date();\n            date = date.getFullYear() + '-' +\n                ('00' + (date.getMonth() + 1)).slice(-2) + '-' +\n                ('00' + date.getDate()).slice(-2) + ' ' +\n                ('00' + date.getHours()).slice(-2) + ':' +\n                ('00' + date.getMinutes()).slice(-2) + ':' +\n                ('00' + date.getSeconds()).slice(-2);\n\n            return date;\n\n        },\n\n        \"tableName\": function (tId) {\n\n            switch (tId) {\n\n                //PDB\n                case 1: return `\"LD_PDB1\"`;\n                case 2: return `\"LD_PDB2\"`;\n                case 3: return `\"LD_PDB3\"`;\n                case 4: return `\"LD_PDB4\"`;\n\n                //Buncher\n                case 5: return `\"LD_Unit7_Buncher_1_Interval\"`;\n                case 6: return `\"LD_Unit7_Buncher_2_Interval\"`;\n                case 7: return `\"LD_Unit7_Buncher_3_Interval\"`;\n                case 8: return `\"LD_Unit7_Buncher_4_Interval\"`;\n                case 9: return `\"LD_Unit7_Buncher_5_Interval\"`;\n                case 10: return `\"LD_Unit7_Buncher_6_Interval\"`;\n                case 11: return `\"LD_Unit7_Buncher_DOWN_Interval\"`;\n\n                //Coiling\n\n                case 12: return `\"LD_Unit7_Coiling_1_Interval\"`;\n                case 13: return `\"LD_Unit7_Coiling_2_Interval\"`;\n                case 14: return `\"LD_Unit7_Coiling_3_Interval\"`;\n                case 15: return `\"LD_Unit7_Coiling_4_Interval\"`;\n                case 16: return `\"LD_Unit7_Coiling_5_Interval\"`;\n                case 17: return `\"LD_Unit7_Coiling_6_Interval\"`;\n                case 18: return `\"LD_Unit7_Coiling_7_Interval`;\n                case 19: return `\"LD_Unit7_Coiling_8_Interval`;\n                case 20: return `\"LD_Unit7_Coiling_9_Interval`;\n                case 21: return `\"LD_Unit7_Coiling_10_Interval\"`;\n                case 22: return `\"LD_Unit7_Coiling_11_Interval\"`;\n                case 23: return `\"LD_Unit7_Coiling_12_Interval\"`;\n                case 24: return `\"LD_Unit7_Coiling_13_Interval\"`;\n                case 25: return `\"LD_Unit7_Coiling_14_Interval\"`;\n                case 26: return `\"LD_Unit7_Coiling_15_Interval\"`;\n                case 27: return `\"LD_Unit7_Coiling_16_Interval\"`;\n\n                //Insulation\n                case 28: return `\"LD_Unit7_Insulation_1_Interval\"`;\n                case 29: return `\"LD_Unit7_Insulation_2_Interval\"`;\n                case 30: return `\"LD_Unit7_Insulation_3_Interval\"`;\n                case 31: return `\"LD_Unit7_Insulation_4_Interval\"`;\n                case 32: return `\"LD_Unit7_Insulation_5_Interval\"`;\n                case 33: return `\"LD_Unit7_Insulation_6_Interval\"`;\n                case 34: return `\"LD_Unit7_Insulation_7_Interval\"`;\n                case 35: return `\"LD_Unit7_Insulation_DOWN_Interval\"`;\n                //MWD\n                case 36: return `\"LD_Unit7_MWD_DOWN_Interval\"`;\n\n\n            }\n\n        },\n\n        \"sdTableName\": function (tId) {\n\n            switch (tId) {\n\n\n                //Buncher\n                case 1: return `\"SD_Unit7_Buncher_1\"`;\n                case 2: return `\"SD_Unit7_Buncher_2\"`;\n                case 3: return `\"SD_Unit7_Buncher_3\"`;\n                case 4: return `\"SD_Unit7_Buncher_4\"`;\n                case 5: return `\"SD_Unit7_Buncher_5\"`;\n                case 6: return `\"SD_Unit7_Buncher_6\"`;\n\n                //Coiling\n\n                case 7: return `\"SD_Unit7_Coiling_1\"`;\n                case 8: return `\"SD_Unit7_Coiling_2\"`;\n                case 9: return `\"SD_Unit7_Coiling_3\"`;\n                case 10: return `\"SD_Unit7_Coiling_4\"`;\n                case 11: return `\"SD_Unit7_Coiling_5\"`;\n                case 12: return `\"SD_Unit7_Coiling_6\"`;\n                case 13: return `\"SD_Unit7_Coiling_7\"`;\n                case 14: return `\"SD_Unit7_Coiling_8\"`;\n                case 15: return `\"SD_Unit7_Coiling_9\"`;\n                case 16: return `\"SD_Unit7_Coiling_10\"`;\n                case 17: return `\"SD_Unit7_Coiling_11\"`;\n                case 18: return `\"SD_Unit7_Coiling_12\"`;\n                case 19: return `\"SD_Unit7_Coiling_13\"`;\n                case 20: return `\"SD_Unit7_Coiling_14\"`;\n                case 21: return `\"SD_Unit7_Coiling_15\"`;\n                case 22: return `\"SD_Unit7_Coiling_16\"`;\n\n                //Insulation\n                case 23: return `\"SD_Unit7_Insulation_1\"`;\n                case 24: return `\"SD_Unit7_Insulation_2\"`;\n                case 25: return `\"SD_Unit7_Insulation_3\"`;\n                case 26: return `\"SD_Unit7_Insulation_4\"`;\n                case 27: return `\"SD_Unit7_Insulation_5\"`;\n                case 28: return `\"SD_Unit7_Insulation_6\"`;\n                case 29: return `\"SD_Unit7_Insulation_7\"`;\n                //MWD\n                case 30: return `\"SD_Unit7_MMW24\"`;\n                case 31: return `\"SD_Unit7_MMW32_1\"`;\n                case 32: return `\"SD_Unit7_MMW32_2\"`;\n                case 33: return `\"SD_Unit7_MMW32_3\"`;\n\n\n            }\n\n        }\n\n\n    }\n    global.set(\"PolycabGlobalFuncation\", setFuncations)\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ddc6f72528cc4fb3",
+        "type": "s7 in",
+        "z": "7a010fde9cc08f8c",
+        "endpoint": "39dd4f1d.0fe3c",
+        "mode": "all",
+        "variable": "",
+        "diff": false,
+        "name": "PDB1",
+        "x": 1210,
+        "y": 260,
+        "wires": [
+            [
+                "22212b9646dfec92"
+            ]
+        ]
+    },
+    {
+        "id": "22212b9646dfec92",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "PDB1",
+        "func": "var bool = msg.payload[\"TEST\"];\n/*var status;\n\n\n  const values = [\n    //MMW32-2\n    { dataPointId: \"1630142652289\", qualityCode: \"1\", value: bool[0].toString()},//PDB1_0\n    { dataPointId: \"1630142668984\", qualityCode: \"1\", value: bool[1].toString()},//PDB1_1\n    { dataPointId: \"1630142679920\", qualityCode: \"1\", value: bool[2].toString()},//PDB1_2\n    { dataPointId: \"1630142689871\", qualityCode: \"1\", value: bool[3].toString()},//PDB1_3\n    { dataPointId: \"1630142701383\", qualityCode: \"1\", value: bool[4].toString()},//PDB1_4\n    { dataPointId: \"1630142713822\", qualityCode: \"1\", value: bool[5].toString()},//PDB1_5\n    { dataPointId: \"1630142724958\", qualityCode: \"1\", value: bool[6].toString()}//PDB1_6\n   ];\nmsg._time = new Date();\nmsg.payload = values;\nreturn msg;*/\n\n\nconst tableno = 1;\nconst fun = global.get(\"PolycabGlobalFuncation\");\nconst datetime = fun.globalDate();\nconst tablename = fun.tableName(tableno);\n\nvar query = `INSERT INTO ${tablename}(\"Datetime\", \"PDB1_0\", \"PDB1_1\", \"PDB1_2\", \"PDB1_3\", \"PDB1_4\", \"PDB1_5\", \"PDB1_6\")\n\t            VALUES ('${datetime}', ${bool[0]}, ${bool[1]}, ${bool[2]}, ${bool[3]}, ${bool[4]}, ${bool[5]}, ${bool[6]});`;\n\nmsg.query = query;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1390,
+        "y": 260,
+        "wires": [
+            [
+                "4f08a401e19277f5"
+            ]
+        ]
+    },
+    {
+        "id": "4f08a401e19277f5",
+        "type": "trigger",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "1",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1550,
+        "y": 260,
+        "wires": [
+            [
+                "286bccfa6f31301a"
+            ]
+        ]
+    },
+    {
+        "id": "286bccfa6f31301a",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 1695,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "570e3bcf27a356f1",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "PDB2",
+        "func": "var bool = msg.payload[\"TEST\"];\n/*var status;\n\n\n  const values = [\n    //MMW32-2\n    { dataPointId: \"1630147723079\", qualityCode: \"1\", value: bool[0].toString()},//PDB2_0\n    { dataPointId: \"1630147735034\", qualityCode: \"1\", value: bool[1].toString()},//PDB2_1\n    { dataPointId: \"1630147752395\", qualityCode: \"1\", value: bool[2].toString()},//PDB2_2\n    { dataPointId: \"1630147762258\", qualityCode: \"1\", value: bool[3].toString()},//PDB2_3\n    { dataPointId: \"1630147769361\", qualityCode: \"1\", value: bool[4].toString()},//PDB2_4\n    { dataPointId: \"1630147779312\", qualityCode: \"1\", value: bool[5].toString()},//PDB2_5\n    { dataPointId: \"1630147791104\", qualityCode: \"1\", value: bool[6].toString()}//PDB2_6\n   ];\nmsg._time = new Date();\nmsg.payload = values;\nreturn msg;*/\n\nconst tableno = 2;\nconst fun = global.get(\"PolycabGlobalFuncation\");\nconst datetime = fun.globalDate();\nconst tablename = fun.tableName(tableno);\n\nvar query = `INSERT INTO ${tablename}(\"Datetime\", \"PDB2_0\", \"PDB2_1\", \"PDB2_2\", \"PDB2_3\", \"PDB2_4\", \"PDB2_5\", \"PDB2_6\")\n\t            VALUES ('${datetime}', ${bool[0]}, ${bool[1]}, ${bool[2]}, ${bool[3]}, ${bool[4]}, ${bool[5]}, ${bool[6]});`;\n\nmsg.query = query;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1390,
+        "y": 320,
+        "wires": [
+            [
+                "0e296a6a3d1da1cb"
+            ]
+        ]
+    },
+    {
+        "id": "0e296a6a3d1da1cb",
+        "type": "trigger",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "1",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1550,
+        "y": 320,
+        "wires": [
+            [
+                "6a8ecaf8ce7e425f"
+            ]
+        ]
+    },
+    {
+        "id": "8841870447b324da",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "PDB3",
+        "func": "var bool = msg.payload[\"TEST\"];\n/*var status;\n\n\n  const values = [\n    //MMW32-2\n    { dataPointId: \"1630148011961\", qualityCode: \"1\", value: bool[0].toString()},//PDB3_0\n    { dataPointId: \"1630148022039\", qualityCode: \"1\", value: bool[1].toString()},//PDB3_1\n    { dataPointId: \"1630148095355\", qualityCode: \"1\", value: bool[2].toString()},//PDB3_2\n    { dataPointId: \"1630148108066\", qualityCode: \"1\", value: bool[3].toString()},//PDB3_3\n    { dataPointId: \"1630148129665\", qualityCode: \"1\", value: bool[4].toString()},//PDB3_4\n    { dataPointId: \"1630148140235\", qualityCode: \"1\", value: bool[5].toString()},//PDB3_5\n    { dataPointId: \"1630148161121\", qualityCode: \"1\", value: bool[6].toString()}//PDB3_6\n   ];\nmsg._time = new Date();\nmsg.payload = values;\nreturn msg;*/\n\nconst tableno = 3;\nconst fun = global.get(\"PolycabGlobalFuncation\");\nconst datetime = fun.globalDate();\nconst tablename = fun.tableName(tableno);\n\nvar query = `INSERT INTO ${tablename}(\"Datetime\", \"PDB3_0\", \"PDB3_1\", \"PDB3_2\", \"PDB3_3\", \"PDB3_4\", \"PDB3_5\", \"PDB3_6\")\n\t            VALUES ('${datetime}', ${bool[0]}, ${bool[1]}, ${bool[2]}, ${bool[3]}, ${bool[4]}, ${bool[5]}, ${bool[6]});`;\n\nmsg.query = query;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1390,
+        "y": 400,
+        "wires": [
+            [
+                "d219d42813d6365f"
+            ]
+        ]
+    },
+    {
+        "id": "16771fe1a9baa34f",
+        "type": "s7 in",
+        "z": "7a010fde9cc08f8c",
+        "endpoint": "dbb74557.258908",
+        "mode": "all",
+        "variable": "",
+        "diff": true,
+        "name": "PDB2",
+        "x": 1210,
+        "y": 320,
+        "wires": [
+            [
+                "570e3bcf27a356f1"
+            ]
+        ]
+    },
+    {
+        "id": "ec15d8bfcecc9568",
+        "type": "s7 in",
+        "z": "7a010fde9cc08f8c",
+        "endpoint": "41630707.fdef68",
+        "mode": "all",
+        "variable": "",
+        "diff": true,
+        "name": "PDB3",
+        "x": 1210,
+        "y": 400,
+        "wires": [
+            [
+                "8841870447b324da"
+            ]
+        ]
+    },
+    {
+        "id": "d219d42813d6365f",
+        "type": "trigger",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "1",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1550,
+        "y": 400,
+        "wires": [
+            [
+                "4ab7c8afa4878144"
+            ]
+        ]
+    },
+    {
+        "id": "6a8ecaf8ce7e425f",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 1695,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "4ab7c8afa4878144",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 1695,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "fa0da2c1e78b6f0c",
+        "type": "s7 in",
+        "z": "7a010fde9cc08f8c",
+        "endpoint": "6b2d72c7.49f24c",
+        "mode": "all",
+        "variable": "",
+        "diff": false,
+        "name": "PDBMMW",
+        "x": 1220,
+        "y": 480,
+        "wires": [
+            [
+                "7ecff5991b1f2dad"
+            ]
+        ]
+    },
+    {
+        "id": "7ecff5991b1f2dad",
+        "type": "function",
+        "z": "7a010fde9cc08f8c",
+        "name": "PDB3",
+        "func": "var bool = msg.payload[\"TEST\"];\n/*var status;\n\n\n  const values = [\n    //MMW32-2\n    { dataPointId: \"1631187408830\", qualityCode: \"1\", value: bool[0].toString()},//PDB4_mmw323\n    { dataPointId: \"1631187383248\", qualityCode: \"1\", value: bool[1].toString()},//PDB4_mmw24\n    { dataPointId: \"1631187395247\", qualityCode: \"1\", value: bool[2].toString()},//PDB4_mmw321\n    { dataPointId: \"1631187403710\", qualityCode: \"1\", value: bool[3].toString()} //PDB4_MMW322\n   ];\nmsg._time = new Date();\nmsg.payload = values;\nreturn msg;*/\n\nconst tableno = 4;\nconst fun = global.get(\"PolycabGlobalFuncation\");\nconst datetime = fun.globalDate();\nconst tablename = fun.tableName(tableno);\n\nvar query = `INSERT INTO ${tablename}(\"Datetime\", \"PDB4_MMW323\", \"PDB4_MMW24\", \"PDB4_MMW321\", \"PDB4_MMW322\")\n\t            VALUES ('${datetime}', ${bool[0]}, ${bool[1]}, ${bool[2]}, ${bool[3]});`;\n\nmsg.query = query;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1370,
+        "y": 480,
+        "wires": [
+            [
+                "54191ebbb213bfe2"
+            ]
+        ]
+    },
+    {
+        "id": "54191ebbb213bfe2",
+        "type": "trigger",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "1",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1550,
+        "y": 480,
+        "wires": [
+            [
+                "7781369dcb35ef70"
+            ]
+        ]
+    },
+    {
+        "id": "7781369dcb35ef70",
+        "type": "link out",
+        "z": "7a010fde9cc08f8c",
+        "name": "",
+        "links": [
+            "a0d8b096.550be",
+            "e25038b33fab932d"
+        ],
+        "x": 1695,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "4586ad2c.53c174",
+        "type": "s7 endpoint",
+        "transport": "iso-on-tcp",
+        "address": "192.168.10.234",
+        "port": "102",
+        "rack": "0",
+        "slot": "1",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "adapter": "",
+        "busaddr": "2",
+        "cycletime": "1000",
+        "timeout": "2000",
+        "name": "coiling 13-16",
+        "vartable": [
+            {
+                "addr": "DB10,X70.1",
+                "name": "Machine_Status1"
+            },
+            {
+                "addr": "DB10,WORD60",
+                "name": "Wire_Size1"
+            },
+            {
+                "addr": "DB10,REAL20",
+                "name": "Final_Length1"
+            },
+            {
+                "addr": "DB10,REAL40",
+                "name": "Production_Count1"
+            },
+            {
+                "addr": "DB10,REAL0",
+                "name": "Total_Length1"
+            },
+            {
+                "addr": "MD30",
+                "name": "Reason_of_Last_Stop1"
+            },
+            {
+                "addr": "DB10,X70.0",
+                "name": "Production_Change1"
+            },
+            {
+                "addr": "DB10,X70.2",
+                "name": "Machine_Status2"
+            },
+            {
+                "addr": "DB10,WORD62",
+                "name": "Wire_Size2"
+            },
+            {
+                "addr": "DB10,REAL24",
+                "name": "Final_Length2"
+            },
+            {
+                "addr": "DB10,REAL44",
+                "name": "Production_Count2"
+            },
+            {
+                "addr": "DB10,REAL4",
+                "name": "Total_Length2"
+            },
+            {
+                "addr": "MD34",
+                "name": "Reason_of_Last_Stop2"
+            },
+            {
+                "addr": "DB10,X70.5",
+                "name": "Production_Change2"
+            },
+            {
+                "addr": "DB10,X70.3",
+                "name": "Machine_Status3"
+            },
+            {
+                "addr": "DB10,WORD64",
+                "name": "Wire_Size3"
+            },
+            {
+                "addr": "DB10,REAL28",
+                "name": "Final_Length3"
+            },
+            {
+                "addr": "DB10,REAL48",
+                "name": "Production_Count3"
+            },
+            {
+                "addr": "DB10,REAL8",
+                "name": "Total_Length3"
+            },
+            {
+                "addr": "MD38",
+                "name": "Reason_of_Last_Stop3"
+            },
+            {
+                "addr": "DB10,X70.6",
+                "name": "Production_Change3"
+            },
+            {
+                "addr": "DB10,X70.4",
+                "name": "Machine_Status4"
+            },
+            {
+                "addr": "DB10,WORD66",
+                "name": "Wire_Size4"
+            },
+            {
+                "addr": "DB10,REAL32",
+                "name": "Final_Length4"
+            },
+            {
+                "addr": "DB10,REAL52",
+                "name": "Production_Count4"
+            },
+            {
+                "addr": "DB10,REAL12",
+                "name": "Total_Length4"
+            },
+            {
+                "addr": "MD42",
+                "name": "Reason_of_Last_Stop4"
+            },
+            {
+                "addr": "DB10,X70.7",
+                "name": "Production_Change4"
+            },
+            {
+                "addr": "DB123,REAL0",
+                "name": "13_75"
+            },
+            {
+                "addr": "DB123,REAL4",
+                "name": "13_100"
+            },
+            {
+                "addr": "DB123,REAL8",
+                "name": "13_150"
+            },
+            {
+                "addr": "DB123,REAL12",
+                "name": "13_250"
+            },
+            {
+                "addr": "DB123,REAL16",
+                "name": "13_400"
+            },
+            {
+                "addr": "DB123,REAL20",
+                "name": "13_600"
+            },
+            {
+                "addr": "DB124,REAL0",
+                "name": "14_75"
+            },
+            {
+                "addr": "DB124,REAL4",
+                "name": "14_100"
+            },
+            {
+                "addr": "DB124,REAL8",
+                "name": "14_150"
+            },
+            {
+                "addr": "DB124,REAL12",
+                "name": "14_250"
+            },
+            {
+                "addr": "DB124,REAL16",
+                "name": "14_400"
+            },
+            {
+                "addr": "DB124,REAL20",
+                "name": "14_600"
+            },
+            {
+                "addr": "DB125,REAL0",
+                "name": "15_75"
+            },
+            {
+                "addr": "DB125,REAL4",
+                "name": "15_100"
+            },
+            {
+                "addr": "DB125,REAL8",
+                "name": "15_150"
+            },
+            {
+                "addr": "DB125,REAL12",
+                "name": "15_250"
+            },
+            {
+                "addr": "DB125,REAL16",
+                "name": "15_400"
+            },
+            {
+                "addr": "DB125,REAL20",
+                "name": "15_600"
+            },
+            {
+                "addr": "DB126,REAL0",
+                "name": "16_75"
+            },
+            {
+                "addr": "DB126,REAL4",
+                "name": "16_100"
+            },
+            {
+                "addr": "DB126,REAL8",
+                "name": "16_150"
+            },
+            {
+                "addr": "DB126,REAL12",
+                "name": "16_250"
+            },
+            {
+                "addr": "DB126,REAL16",
+                "name": "16_400"
+            },
+            {
+                "addr": "DB126,REAL20",
+                "name": "16_600"
+            }
+        ]
+    },
+    {
+        "id": "93c3fe7a.57b17",
+        "type": "s7 endpoint",
+        "transport": "iso-on-tcp",
+        "address": "192.168.10.231",
+        "port": "102",
+        "rack": "0",
+        "slot": "1",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "adapter": "",
+        "busaddr": "2",
+        "cycletime": "1000",
+        "timeout": "2000",
+        "name": "Coiling 1-4",
+        "vartable": [
+            {
+                "addr": "DB10,X70.1",
+                "name": "Machine_Status1"
+            },
+            {
+                "addr": "DB10,WORD60",
+                "name": "Wire_Size1"
+            },
+            {
+                "addr": "DB10,REAL20",
+                "name": "Final_Length1"
+            },
+            {
+                "addr": "DB10,REAL40",
+                "name": "Production_Count1"
+            },
+            {
+                "addr": "DB10,REAL0",
+                "name": "Total_Length1"
+            },
+            {
+                "addr": "MD30",
+                "name": "Reason_of_Last_Stop1"
+            },
+            {
+                "addr": "DB10,X70.0",
+                "name": "Production_Change1"
+            },
+            {
+                "addr": "DB10,X70.2",
+                "name": "Machine_Status2"
+            },
+            {
+                "addr": "DB10,WORD62",
+                "name": "Wire_Size2"
+            },
+            {
+                "addr": "DB10,REAL24",
+                "name": "Final_Length2"
+            },
+            {
+                "addr": "DB10,REAL44",
+                "name": "Production_Count2"
+            },
+            {
+                "addr": "DB10,REAL4",
+                "name": "Total_Length2"
+            },
+            {
+                "addr": "MD34",
+                "name": "Reason_of_Last_Stop2"
+            },
+            {
+                "addr": "DB10,X70.5",
+                "name": "Production_Change2"
+            },
+            {
+                "addr": "DB10,X70.3",
+                "name": "Machine_Status3"
+            },
+            {
+                "addr": "DB10,WORD64",
+                "name": "Wire_Size3"
+            },
+            {
+                "addr": "DB10,REAL28",
+                "name": "Final_Length3"
+            },
+            {
+                "addr": "DB10,REAL48",
+                "name": "Production_Count3"
+            },
+            {
+                "addr": "DB10,REAL8",
+                "name": "Total_Length3"
+            },
+            {
+                "addr": "MD38",
+                "name": "Reason_of_Last_Stop3"
+            },
+            {
+                "addr": "DB10,X70.6",
+                "name": "Production_Change3"
+            },
+            {
+                "addr": "DB10,X70.4",
+                "name": "Machine_Status4"
+            },
+            {
+                "addr": "DB10,WORD66",
+                "name": "Wire_Size4"
+            },
+            {
+                "addr": "DB10,REAL32",
+                "name": "Final_Length4"
+            },
+            {
+                "addr": "DB10,REAL52",
+                "name": "Production_Count4"
+            },
+            {
+                "addr": "DB10,REAL12",
+                "name": "Total_Length4"
+            },
+            {
+                "addr": "MD42",
+                "name": "Reason_of_Last_Stop4"
+            },
+            {
+                "addr": "DB10,X70.7",
+                "name": "Production_Change4"
+            },
+            {
+                "addr": "DB111,REAL0",
+                "name": "1_75"
+            },
+            {
+                "addr": "DB111,REAL4",
+                "name": "1_100"
+            },
+            {
+                "addr": "DB111,REAL8",
+                "name": "1_150"
+            },
+            {
+                "addr": "DB111,REAL12",
+                "name": "1_250"
+            },
+            {
+                "addr": "DB111,REAL16",
+                "name": "1_400"
+            },
+            {
+                "addr": "DB111,REAL20",
+                "name": "1_600"
+            },
+            {
+                "addr": "DB112,REAL0",
+                "name": "2_75"
+            },
+            {
+                "addr": "DB112,REAL4",
+                "name": "2_100"
+            },
+            {
+                "addr": "DB112,REAL8",
+                "name": "2_150"
+            },
+            {
+                "addr": "DB112,REAL12",
+                "name": "2_250"
+            },
+            {
+                "addr": "DB112,REAL16",
+                "name": "2_400"
+            },
+            {
+                "addr": "DB112,REAL20",
+                "name": "2_600"
+            },
+            {
+                "addr": "DB113,REAL0",
+                "name": "3_75"
+            },
+            {
+                "addr": "DB113,REAL4",
+                "name": "3_100"
+            },
+            {
+                "addr": "DB113,REAL8",
+                "name": "3_150"
+            },
+            {
+                "addr": "DB113,REAL12",
+                "name": "3_250"
+            },
+            {
+                "addr": "DB113,REAL16",
+                "name": "3_400"
+            },
+            {
+                "addr": "DB113,REAL20",
+                "name": "3_600"
+            },
+            {
+                "addr": "DB114,REAL0",
+                "name": "4_75"
+            },
+            {
+                "addr": "DB114,REAL4",
+                "name": "4_100"
+            },
+            {
+                "addr": "DB114,REAL8",
+                "name": "4_150"
+            },
+            {
+                "addr": "DB114,REAL12",
+                "name": "4_250"
+            },
+            {
+                "addr": "DB114,REAL16",
+                "name": "4_400"
+            },
+            {
+                "addr": "DB114,REAL20",
+                "name": "4_600"
+            }
+        ]
+    },
+    {
+        "id": "a9a7d818.c90068",
+        "type": "s7 endpoint",
+        "transport": "iso-on-tcp",
+        "address": "192.168.10.232",
+        "port": "102",
+        "rack": "0",
+        "slot": "1",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "adapter": "",
+        "busaddr": "2",
+        "cycletime": "1000",
+        "timeout": "2000",
+        "name": "Coiling 5-8",
+        "vartable": [
+            {
+                "addr": "DB10,X70.1",
+                "name": "Machine_Status1"
+            },
+            {
+                "addr": "DB10,WORD60",
+                "name": "Wire_Size1"
+            },
+            {
+                "addr": "DB10,REAL20",
+                "name": "Final_Length1"
+            },
+            {
+                "addr": "DB10,REAL40",
+                "name": "Production_Count1"
+            },
+            {
+                "addr": "DB10,REAL0",
+                "name": "Total_Length1"
+            },
+            {
+                "addr": "MD30",
+                "name": "Reason_of_Last_Stop1"
+            },
+            {
+                "addr": "DB10,X70.0",
+                "name": "Production_Change1"
+            },
+            {
+                "addr": "DB10,X70.2",
+                "name": "Machine_Status2"
+            },
+            {
+                "addr": "DB10,WORD62",
+                "name": "Wire_Size2"
+            },
+            {
+                "addr": "DB10,REAL24",
+                "name": "Final_Length2"
+            },
+            {
+                "addr": "DB10,REAL44",
+                "name": "Production_Count2"
+            },
+            {
+                "addr": "DB10,REAL4",
+                "name": "Total_Length2"
+            },
+            {
+                "addr": "MD34",
+                "name": "Reason_of_Last_Stop2"
+            },
+            {
+                "addr": "DB10,X70.5",
+                "name": "Production_Change2"
+            },
+            {
+                "addr": "DB10,X70.3",
+                "name": "Machine_Status3"
+            },
+            {
+                "addr": "DB10,WORD64",
+                "name": "Wire_Size3"
+            },
+            {
+                "addr": "DB10,REAL28",
+                "name": "Final_Length3"
+            },
+            {
+                "addr": "DB10,REAL48",
+                "name": "Production_Count3"
+            },
+            {
+                "addr": "DB10,REAL8",
+                "name": "Total_Length3"
+            },
+            {
+                "addr": "MD38",
+                "name": "Reason_of_Last_Stop3"
+            },
+            {
+                "addr": "DB10,X70.6",
+                "name": "Production_Change3"
+            },
+            {
+                "addr": "DB10,X70.4",
+                "name": "Machine_Status4"
+            },
+            {
+                "addr": "DB10,WORD66",
+                "name": "Wire_Size4"
+            },
+            {
+                "addr": "DB10,REAL32",
+                "name": "Final_Length4"
+            },
+            {
+                "addr": "DB10,REAL52",
+                "name": "Production_Count4"
+            },
+            {
+                "addr": "DB10,REAL12",
+                "name": "Total_Length4"
+            },
+            {
+                "addr": "MD42",
+                "name": "Reason_of_Last_Stop4"
+            },
+            {
+                "addr": "DB10,X70.7",
+                "name": "Production_Change4"
+            },
+            {
+                "addr": "DB115,REAL0",
+                "name": "5_75"
+            },
+            {
+                "addr": "DB115,REAL4",
+                "name": "5_100"
+            },
+            {
+                "addr": "DB115,REAL8",
+                "name": "5_150"
+            },
+            {
+                "addr": "DB115,REAL12",
+                "name": "5_250"
+            },
+            {
+                "addr": "DB115,REAL16",
+                "name": "5_400"
+            },
+            {
+                "addr": "DB115,REAL20",
+                "name": "5_600"
+            },
+            {
+                "addr": "DB116,REAL0",
+                "name": "6_75"
+            },
+            {
+                "addr": "DB116,REAL4",
+                "name": "6_100"
+            },
+            {
+                "addr": "DB116,REAL8",
+                "name": "6_150"
+            },
+            {
+                "addr": "DB116,REAL12",
+                "name": "6_250"
+            },
+            {
+                "addr": "DB116,REAL16",
+                "name": "6_400"
+            },
+            {
+                "addr": "DB116,REAL20",
+                "name": "6_600"
+            },
+            {
+                "addr": "DB117,REAL0",
+                "name": "7_75"
+            },
+            {
+                "addr": "DB117,REAL4",
+                "name": "7_100"
+            },
+            {
+                "addr": "DB117,REAL8",
+                "name": "7_150"
+            },
+            {
+                "addr": "DB117,REAL12",
+                "name": "7_250"
+            },
+            {
+                "addr": "DB117,REAL16",
+                "name": "7_400"
+            },
+            {
+                "addr": "DB117,REAL20",
+                "name": "7_600"
+            },
+            {
+                "addr": "DB118,REAL0",
+                "name": "8_75"
+            },
+            {
+                "addr": "DB118,REAL4",
+                "name": "8_100"
+            },
+            {
+                "addr": "DB118,REAL8",
+                "name": "8_150"
+            },
+            {
+                "addr": "DB118,REAL12",
+                "name": "8_250"
+            },
+            {
+                "addr": "DB118,REAL16",
+                "name": "8_400"
+            },
+            {
+                "addr": "DB118,REAL20",
+                "name": "8_600"
+            }
+        ]
+    },
+    {
+        "id": "ec53c49d.a911b8",
+        "type": "s7 endpoint",
+        "transport": "iso-on-tcp",
+        "address": "192.168.10.233",
+        "port": "102",
+        "rack": "0",
+        "slot": "1",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "adapter": "",
+        "busaddr": "2",
+        "cycletime": "1000",
+        "timeout": "2000",
+        "name": "Coiling 9-12",
+        "vartable": [
+            {
+                "addr": "DB10,X70.1",
+                "name": "Machine_Status1"
+            },
+            {
+                "addr": "DB10,WORD60",
+                "name": "Wire_Size1"
+            },
+            {
+                "addr": "DB10,REAL20",
+                "name": "Final_Length1"
+            },
+            {
+                "addr": "DB10,REAL40",
+                "name": "Production_Count1"
+            },
+            {
+                "addr": "DB10,REAL0",
+                "name": "Total_Length1"
+            },
+            {
+                "addr": "MD30",
+                "name": "Reason_of_Last_Stop1"
+            },
+            {
+                "addr": "DB10,X70.0",
+                "name": "Production_Change1"
+            },
+            {
+                "addr": "DB10,X70.2",
+                "name": "Machine_Status2"
+            },
+            {
+                "addr": "DB10,WORD62",
+                "name": "Wire_Size2"
+            },
+            {
+                "addr": "DB10,REAL24",
+                "name": "Final_Length2"
+            },
+            {
+                "addr": "DB10,REAL44",
+                "name": "Production_Count2"
+            },
+            {
+                "addr": "DB10,REAL4",
+                "name": "Total_Length2"
+            },
+            {
+                "addr": "MD34",
+                "name": "Reason_of_Last_Stop2"
+            },
+            {
+                "addr": "DB10,X70.5",
+                "name": "Production_Change2"
+            },
+            {
+                "addr": "DB10,X70.3",
+                "name": "Machine_Status3"
+            },
+            {
+                "addr": "DB10,WORD64",
+                "name": "Wire_Size3"
+            },
+            {
+                "addr": "DB10,REAL28",
+                "name": "Final_Length3"
+            },
+            {
+                "addr": "DB10,REAL48",
+                "name": "Production_Count3"
+            },
+            {
+                "addr": "DB10,REAL8",
+                "name": "Total_Length3"
+            },
+            {
+                "addr": "MD38",
+                "name": "Reason_of_Last_Stop3"
+            },
+            {
+                "addr": "DB10,X70.6",
+                "name": "Production_Change3"
+            },
+            {
+                "addr": "DB10,X70.4",
+                "name": "Machine_Status4"
+            },
+            {
+                "addr": "DB10,WORD66",
+                "name": "Wire_Size4"
+            },
+            {
+                "addr": "DB10,REAL32",
+                "name": "Final_Length4"
+            },
+            {
+                "addr": "DB10,REAL52",
+                "name": "Production_Count4"
+            },
+            {
+                "addr": "DB10,REAL12",
+                "name": "Total_Length4"
+            },
+            {
+                "addr": "MD42",
+                "name": "Reason_of_Last_Stop4"
+            },
+            {
+                "addr": "DB10,X70.7",
+                "name": "Production_Change4"
+            },
+            {
+                "addr": "DB119,REAL0",
+                "name": "9_75"
+            },
+            {
+                "addr": "DB119,REAL4",
+                "name": "9_100"
+            },
+            {
+                "addr": "DB119,REAL8",
+                "name": "9_150"
+            },
+            {
+                "addr": "DB119,REAL12",
+                "name": "9_250"
+            },
+            {
+                "addr": "DB119,REAL16",
+                "name": "9_400"
+            },
+            {
+                "addr": "DB119,REAL20",
+                "name": "9_600"
+            },
+            {
+                "addr": "DB120,REAL0",
+                "name": "10_75"
+            },
+            {
+                "addr": "DB120,REAL4",
+                "name": "10_100"
+            },
+            {
+                "addr": "DB120,REAL8",
+                "name": "10_150"
+            },
+            {
+                "addr": "DB120,REAL12",
+                "name": "10_250"
+            },
+            {
+                "addr": "DB120,REAL16",
+                "name": "10_400"
+            },
+            {
+                "addr": "DB120,REAL20",
+                "name": "10_600"
+            },
+            {
+                "addr": "DB121,REAL0",
+                "name": "11_75"
+            },
+            {
+                "addr": "DB121,REAL4",
+                "name": "11_100"
+            },
+            {
+                "addr": "DB121,REAL8",
+                "name": "11_150"
+            },
+            {
+                "addr": "DB121,REAL12",
+                "name": "11_250"
+            },
+            {
+                "addr": "DB121,REAL16",
+                "name": "11_400"
+            },
+            {
+                "addr": "DB121,REAL20",
+                "name": "11_600"
+            },
+            {
+                "addr": "DB122,REAL0",
+                "name": "12_75"
+            },
+            {
+                "addr": "DB122,REAL4",
+                "name": "12_100"
+            },
+            {
+                "addr": "DB122,REAL8",
+                "name": "12_150"
+            },
+            {
+                "addr": "DB122,REAL12",
+                "name": "12_250"
+            },
+            {
+                "addr": "DB122,REAL16",
+                "name": "12_400"
+            },
+            {
+                "addr": "DB122,REAL20",
+                "name": "12_600"
+            }
+        ]
+    },
+    {
+        "id": "39dd4f1d.0fe3c",
+        "type": "s7 endpoint",
+        "transport": "iso-on-tcp",
+        "address": "192.168.10.205",
+        "port": "102",
+        "rack": "0",
+        "slot": "1",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "adapter": "",
+        "busaddr": "2",
+        "cycletime": "1000",
+        "timeout": "2000",
+        "name": "PDB1",
+        "vartable": [
+            {
+                "addr": "DB1,REAL1100.30",
+                "name": "TEST"
+            }
+        ]
+    },
+    {
+        "id": "dbb74557.258908",
+        "type": "s7 endpoint",
+        "transport": "iso-on-tcp",
+        "address": "192.168.10.206",
+        "port": "102",
+        "rack": "0",
+        "slot": "1",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "adapter": "",
+        "busaddr": "2",
+        "cycletime": "1000",
+        "timeout": "2000",
+        "name": "PDB2",
+        "vartable": [
+            {
+                "addr": "DB1,REAL1100.30",
+                "name": "TEST"
+            }
+        ]
+    },
+    {
+        "id": "41630707.fdef68",
+        "type": "s7 endpoint",
+        "transport": "iso-on-tcp",
+        "address": "192.168.10.207",
+        "port": "102",
+        "rack": "0",
+        "slot": "1",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "adapter": "",
+        "busaddr": "2",
+        "cycletime": "1000",
+        "timeout": "2000",
+        "name": "PDB3",
+        "vartable": [
+            {
+                "addr": "DB1,REAL1100.30",
+                "name": "TEST"
+            }
+        ]
+    },
+    {
+        "id": "6b2d72c7.49f24c",
+        "type": "s7 endpoint",
+        "transport": "iso-on-tcp",
+        "address": "192.168.10.208",
+        "port": "102",
+        "rack": "0",
+        "slot": "1",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "adapter": "",
+        "busaddr": "2",
+        "cycletime": "1000",
+        "timeout": "2000",
+        "name": "",
+        "vartable": [
+            {
+                "addr": "DB1,REAL1100.5",
+                "name": "TEST"
+            }
+        ]
+    }
+]
