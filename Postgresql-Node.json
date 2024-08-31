@@ -1,0 +1,381 @@
+[
+    {
+        "id": "f915bde16d0c1f5a",
+        "type": "tab",
+        "label": "Postgres SQL",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "98da16ef33918836",
+        "type": "link in",
+        "z": "f915bde16d0c1f5a",
+        "name": "Postgress Data",
+        "links": [
+            "03f088f3f31de8b5",
+            "08c087bc9794cf2d",
+            "10d42a3095a64d48",
+            "11d68ac5fc521d1a",
+            "1543d9b462cd328b",
+            "364d8cb4b6820a4e",
+            "40b3c27b73e2cdbf",
+            "40fe6631fead2aba",
+            "4118fbbb5a1d91c5",
+            "4d22e2c24f5f7f71",
+            "4da152ca706dbb8c",
+            "517681f3dc848ce1",
+            "55f3dfae9b050969",
+            "591d3cd5987b0521",
+            "5990ee4d07b53311",
+            "5cade8141f6c4c98",
+            "5f50d853d4167dcf",
+            "693c9d9392ae0439",
+            "69b091893f5b87cc",
+            "6a5a5b5e19f4e5f5",
+            "6c9cfeaec5e34d06",
+            "6f30451a421a7d18",
+            "745370a6851f91e9",
+            "74fa1de073ea7f04",
+            "7c039bc1a99c8509",
+            "7f31d3d824d4db49",
+            "8225d9aefb832487",
+            "86b1811d2bc9ef6d",
+            "87c5ddb85fc4cbaf",
+            "8e1cd3b4708aba5c",
+            "99d6fa1a68edd914",
+            "b070b5fd768c038e",
+            "b545c884380b9616",
+            "b66210c359925eab",
+            "ba136764f0b97a20",
+            "bce93b456090d722",
+            "bf13b19a1602fc77",
+            "ca4b3d2e0aa2ce61",
+            "cb18cdca91300798",
+            "cd3f641666048a64",
+            "cdd3ef77e7d918e2",
+            "ce87171221e7be91",
+            "d51ab5bda778610c",
+            "dcdaf7eb0d1cb827",
+            "ded1e87e779c5605",
+            "e67a358b0f08d747",
+            "ec5b96f20cfe791e",
+            "f540e11283cd1d8f",
+            "feaba9aeb8aaf426",
+            "fedb65b8091898db",
+            "4a35ba9331846cf2",
+            "e9e6459b98cd683d",
+            "c5357d1a20c8253b",
+            "5c9471cbd83490f2",
+            "3db7cf616eca937f",
+            "fb882ab16ffb3f11",
+            "f28831ae7a206dc8",
+            "5bda033ee7a06c15",
+            "962786b529a08da2",
+            "ab7f4a0480be9ae9",
+            "5abd271f47771903",
+            "201466dfbeabbdbf",
+            "32dd7f10467d3d29",
+            "d14d69c3edb62ae2",
+            "2aa1b0fe1b97cd1b",
+            "d36b420975668424",
+            "cec376af4b5a93c5",
+            "0207880aa0efc1a9"
+        ],
+        "x": 275,
+        "y": 200,
+        "wires": [
+            [
+                "fbbb650be2e7f3a3"
+            ]
+        ]
+    },
+    {
+        "id": "cb7c05f5315d3420",
+        "type": "inject",
+        "z": "f915bde16d0c1f5a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "control",
+        "payload": "trigger",
+        "payloadType": "str",
+        "x": 300,
+        "y": 280,
+        "wires": [
+            [
+                "2b3ee5239dfa652a"
+            ]
+        ]
+    },
+    {
+        "id": "2b3ee5239dfa652a",
+        "type": "is online",
+        "z": "f915bde16d0c1f5a",
+        "name": "if Online",
+        "url": "www.google.com",
+        "action": "1",
+        "x": 520,
+        "y": 280,
+        "wires": [
+            [
+                "fbbb650be2e7f3a3",
+                "db508266eb8cb9a0"
+            ]
+        ]
+    },
+    {
+        "id": "94f8e5c6d4e3edd0",
+        "type": "inject",
+        "z": "f915bde16d0c1f5a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "control",
+        "payload": "queue",
+        "payloadType": "str",
+        "x": 300,
+        "y": 360,
+        "wires": [
+            [
+                "b59226d6269e1a91"
+            ]
+        ]
+    },
+    {
+        "id": "b59226d6269e1a91",
+        "type": "is online",
+        "z": "f915bde16d0c1f5a",
+        "name": "if Offline",
+        "url": "www.google.com",
+        "action": "2",
+        "x": 520,
+        "y": 360,
+        "wires": [
+            [
+                "fbbb650be2e7f3a3",
+                "db508266eb8cb9a0"
+            ]
+        ]
+    },
+    {
+        "id": "fbbb650be2e7f3a3",
+        "type": "q-gate",
+        "z": "f915bde16d0c1f5a",
+        "name": "",
+        "controlTopic": "control",
+        "defaultState": "queueing",
+        "openCmd": "open",
+        "closeCmd": "close",
+        "toggleCmd": "toggle",
+        "queueCmd": "queue",
+        "defaultCmd": "default",
+        "triggerCmd": "trigger",
+        "flushCmd": "flush",
+        "resetCmd": "reset",
+        "peekCmd": "peek",
+        "dropCmd": "drop",
+        "statusCmd": "status",
+        "maxQueueLength": "999999999",
+        "keepNewest": false,
+        "qToggle": false,
+        "persist": true,
+        "storeName": "memory",
+        "x": 430,
+        "y": 200,
+        "wires": [
+            [
+                "c42c2826d9f32d5a",
+                "eb74750f4899825d"
+            ]
+        ]
+    },
+    {
+        "id": "eb74750f4899825d",
+        "type": "postgresql",
+        "z": "f915bde16d0c1f5a",
+        "name": "",
+        "query": "",
+        "postgreSQLConfig": "003c3ec289b3e4cf",
+        "split": true,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 650,
+        "y": 200,
+        "wires": [
+            [
+                "0cb6460312716252"
+            ]
+        ]
+    },
+    {
+        "id": "c42c2826d9f32d5a",
+        "type": "debug",
+        "z": "f915bde16d0c1f5a",
+        "name": "debug 20",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "0cb6460312716252",
+        "type": "debug",
+        "z": "f915bde16d0c1f5a",
+        "name": "debug 21",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "05fcb884a62367c5",
+        "type": "catch",
+        "z": "f915bde16d0c1f5a",
+        "name": "",
+        "scope": [
+            "eb74750f4899825d"
+        ],
+        "uncaught": false,
+        "x": 270,
+        "y": 500,
+        "wires": [
+            [
+                "6020ba33ef83f0ba",
+                "f28d7a781ce8d319"
+            ]
+        ]
+    },
+    {
+        "id": "db508266eb8cb9a0",
+        "type": "function",
+        "z": "f915bde16d0c1f5a",
+        "name": "Global Funcation",
+        "func": "\nvar fun = global.get(\"PolycabGlobalFuncation\");\nif (fun == undefined) {\n    var setFuncations = {\n        \"globalDate\": function () {\n            var date = new Date();\n            date = date.getFullYear() + '-' +\n                ('00' + (date.getMonth() + 1)).slice(-2) + '-' +\n                ('00' + date.getDate()).slice(-2) + ' ' +\n                ('00' + date.getHours()).slice(-2) + ':' +\n                ('00' + date.getMinutes()).slice(-2) + ':' +\n                ('00' + date.getSeconds()).slice(-2);\n\n            return date;\n\n        },\n\n        // Details Data Tables\n        \"tableName\": function (tId) {\n            \n            switch(tId){\n\n                //Armoring\n                case 1: return `\"LD_Arm_18_18\"`;\n                case 2: return `\"LD_Arm_18_20\"`;\n                case 3: return `\"LD_Arm_20Cage1\"`;\n                case 4: return `\"LD_Arm_20Cage2\"`;\n                case 5: return `\"LD_Arm_20Cage3\"`;\n                case 6: return `\"LD_Arm_20Cage4\"`;\n                case 7: return `\"LD_Arm_24Cage5\"`;\n                case 8: return `\"LD_Arm_24Cage400_1\"`;\n                case 9: return `\"LD_Arm_24Cage400_2\"`;\n                case 10: return `\"LD_Arm_32Cage400_1\"`;\n                case 11: return `\"LD_Arm_32Cage400_2\"`;\n                case 12: return `\"LD_Arm_2000DT\"`;\n\n                // Buncher\n\n                case 13: return `\"LD_Bun_800_1\"`;\n                case 14: return `\"LD_Bun_800_2\"`;\n                case 15: return `\"LD_Bun_Satic1250\"`;\n                case 16: return `\"LD_Bun_Satic1600\"`;\n\n                // DT\n                case 17: return `\"LD_DT_1_3Skip_1\"`;\n                case 18: return `\"LD_DT_1_4Skip_1\"`;\n                case 19: return `\"LD_DT_1600_2000\"`;\n                case 20: return `\"LD_DT_2000_2200\"`;\n                case 21: return `\"LD_DT_Laidup8_16\"`;\n\n                // Insulation \n\n                case 22: return `\"LD_Ins_80_45_1\"`; \n                case 23: return `\"LD_Ins_80_45_2\"`;\n                case 24: return `\"LD_Ins_80_45_3\"`;\n                case 25: return `\"LD_Ins_80_45_4\"`;\n                case 26: return `\"LD_Ins_80mmIS3\"`;\n                case 27: return `\"LD_Ins_100_45mm1\"`;\n                case 28: return `\"LD_Ins_100_65mm4\"`;\n                case 29: return `\"LD_Ins_100mmIS5\"`;\n                case 30: return `\"LD_Ins_100mmOS2\"`;\n                case 31: return `\"LD_Ins_100mmOS3\"`;\n                case 32: return `\"LD_Ins_120_65Royal1\"`;\n                case 33: return `\"LD_Ins_120_65Royal2\"`;\n                case 34: return `\"LD_Ins_120_Supermac\"`;\n\n                // Energy Data\n                case 35: return `\"Energy_Data\"`;\n\n\n\n            }\n\n        },\n\n        // Summary Data Tables\n        \"sdTableName\": function (tId) {\n\n            switch (tId) {\n\n                //Armoring\n                case 1: return `\"SD_Arm_18_18\"`;\n                case 2: return `\"SD_Arm_18_20\"`;\n                case 3: return `\"SD_Arm_20Cage1\"`;\n                case 4: return `\"SD_Arm_20Cage2\"`;\n                case 5: return `\"SD_Arm_20Cage3\"`;\n                case 6: return `\"SD_Arm_20Cage4\"`;\n                case 7: return `\"SD_Arm_24Cage5\"`;\n                case 8: return `\"SD_Arm_24Cage400_1\"`;\n                case 9: return `\"SD_Arm_24Cage400_2\"`;\n                case 10: return `\"SD_Arm_32Cage400_1\"`;\n                case 11: return `\"SD_Arm_32Cage400_2\"`;\n                case 12: return `\"SD_Arm_2000DT\"`;\n\n                // Buncher\n\n                case 13: return `\"SD_Bun_800_1\"`;\n                case 14: return `\"SD_Bun_800_2\"`;\n                case 15: return `\"SD_Bun_Satic1250\"`;\n                case 16: return `\"SD_Bun_Satic1600\"`;\n\n                // DT\n                case 17: return `\"SD_DT_1_3Skip_1\"`;\n                case 18: return `\"SD_DT_1_4Skip_1\"`;\n                case 19: return `\"SD_DT_1600_2000\"`;\n                case 20: return `\"SD_DT_2000_2200\"`;\n                case 21: return `\"SD_DT_Laidup8_16\"`;\n\n                // Insulation \n\n                case 22: return `\"SD_Ins_80_45_1\"`;\n                case 23: return `\"SD_Ins_80_45_2\"`;\n                case 24: return `\"SD_Ins_80_45_3\"`;\n                case 25: return `\"SD_Ins_80_45_4\"`;\n                case 26: return `\"SD_Ins_80mmIS3\"`;\n                case 27: return `\"SD_Ins_100_45mm1\"`;\n                case 28: return `\"SD_Ins_100_65mm4\"`;\n                case 29: return `\"SD_Ins_100mmIS5\"`;\n                case 30: return `\"SD_Ins_100mmOS2\"`;\n                case 31: return `\"SD_Ins_100mmOS3\"`;\n                case 32: return `\"SD_Ins_120_65Royal1\"`;\n                case 33: return `\"SD_Ins_120_65Royal2\"`;\n                case 34: return `\"SD_Ins_120_Supermac\"`;\n\n\n            }\n\n        }\n\n\n    }\n    global.set(\"PolycabGlobalFuncation\", setFuncations)\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ffd0c977d3bf3de5",
+        "type": "file",
+        "z": "f915bde16d0c1f5a",
+        "name": "Error Data",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 630,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6020ba33ef83f0ba",
+        "type": "function",
+        "z": "f915bde16d0c1f5a",
+        "name": "function 332",
+        "func": "var data = msg.payload;\nmsg.payload = data;\n\nvar date = new Date();\nvar year = date.getFullYear().toString();\nvar month = ('00' + (date.getMonth() + 1)).slice(-2).toString();\nvar dateS = ('00' + date.getDate()).slice(-2).toString();\n\nvar file = dateS + month + year;\nmsg.filename = `D:/HiMak/Error/${file}.txt`\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 500,
+        "wires": [
+            [
+                "ffd0c977d3bf3de5"
+            ]
+        ]
+    },
+    {
+        "id": "f28d7a781ce8d319",
+        "type": "debug",
+        "z": "f915bde16d0c1f5a",
+        "name": "debug 22",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "003c3ec289b3e4cf",
+        "type": "postgreSQLConfig",
+        "name": "",
+        "host": "polycab-test.cja624y4obdd.us-east-1.rds.amazonaws.com",
+        "hostFieldType": "str",
+        "port": "5432",
+        "portFieldType": "num",
+        "database": "Unit-3D",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "applicationName": "",
+        "applicationNameType": "str",
+        "max": "1000000",
+        "maxFieldType": "num",
+        "idle": "10000",
+        "idleFieldType": "num",
+        "connectionTimeout": "100000",
+        "connectionTimeoutFieldType": "num",
+        "user": "postgres",
+        "userFieldType": "str",
+        "password": "Polycab!123",
+        "passwordFieldType": "str"
+    }
+]
